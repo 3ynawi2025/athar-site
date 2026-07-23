@@ -1,415 +1,414 @@
-1|<!doctype html>
-2|<html lang="ar" dir="rtl">
-3|<head>
-4|<meta charset="utf-8">
-5|<meta name="viewport" content="width=device-width, initial-scale=1">
-6|<title>أثر · Athar</title>
-7|<meta name="description" content="أثر — تطبيق الملاحة البرّية والتواصل: خرائط تعمل بلا إنترنت، تخاطب صوتي، ومساعد ذكي.">
-8|<style>*{margin:0;padding:0;box-sizing:border-box}</style>
-9|</head>
-10|<body>
-11|<style>
-12|  :root{
-13|    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
-14|    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
-15|    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
-16|    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
-17|    --accent:var(--green);
-18|    --maxw:1120px;
-19|    /* Arabic calligraphic display (Naskh/Majalla) → graceful fallbacks */
-20|    --display-ar:"Sakkal Majalla","Aref Ruqaa","Traditional Arabic","Arabic Typesetting","Noto Naskh Arabic","Amiri",serif;
-21|    --body-ar:"Segoe UI","Sakkal Majalla","Geeza Pro","SF Arabic",Tahoma,sans-serif;
-22|    --display-en:"Iowan Old Style","Palatino Linotype","Palatino",Georgia,serif;
-23|    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-24|  }
-25|  @media (prefers-color-scheme: dark){
-26|    :root{
-27|      --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
-28|      --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
-29|      --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
-30|      --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
-31|    }
-32|  }
-33|  :root[data-theme="light"]{
-34|    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
-35|    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
-36|    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
-37|    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
-38|  }
-39|  :root[data-theme="dark"]{
-40|    --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
-41|    --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
-42|    --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
-43|    --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
-44|  }
-45|
-46|  *{box-sizing:border-box;}
-47|  body{margin:0;}
-48|  .athar{direction:rtl; text-align:right; background:var(--ground); color:var(--ink);
-49|    font-family:var(--body-ar); line-height:1.75; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
-50|  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:24px;}
-51|
-52|  h1,h2,h3{font-family:var(--display-ar); font-weight:700; line-height:1.28; text-wrap:balance; margin:0;}
-53|  p{margin:0;}
-54|  /* English secondary layer — quieter, latin serif, LTR */
-55|  .en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;}
-56|  .en-body{font-family:var(--display-en); direction:ltr; text-align:right; color:var(--ink-soft); font-style:italic;}
-57|  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
-58|  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase;
-59|    color:var(--sand); direction:ltr; text-align:right; display:inline-block;}
-60|
-61|  /* ---------- HERO ---------- */
-62|  .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--hair);}
-63|  .hero-sky{position:absolute; inset:0; z-index:0;
-64|    background:radial-gradient(120% 90% at 78% -10%, color-mix(in oklab, var(--sand-soft) 55%, transparent), transparent 60%),
-65|      linear-gradient(180deg, var(--sky), var(--ground));}
-66|  .contours{position:absolute; inset:0; z-index:0; opacity:.5; color:var(--green);}
-67|  :root[data-theme="dark"] .contours{opacity:.28;}
-68|  :root[data-theme="light"] .contours{opacity:.5;}
-69|  @media (prefers-color-scheme: dark){ .contours{opacity:.28;} }
-70|  .dunes{position:absolute; left:0; right:0; bottom:-1px; z-index:0;}
-71|  .hero .wrap{position:relative; z-index:2; padding-top:84px; padding-bottom:196px;}
-72|
-73|  .brandrow{display:flex; align-items:center; gap:14px; margin-bottom:40px;}
-74|  .mark{width:46px; height:46px; flex:none;}
-75|  .brandname{font-family:var(--display-ar); font-weight:700; font-size:26px;}
-76|  .brandlatin{font-family:var(--mono); font-size:11px; letter-spacing:.38em; color:var(--ink-soft); direction:ltr;}
-77|
-78|  .hero h1{font-size:clamp(46px,8vw,86px); letter-spacing:0;}
-79|  .hero h1 .amber{color:var(--sand);}
-80|  .hero .h1-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;
-81|    font-size:clamp(20px,3vw,30px); color:var(--ink); margin-top:14px; font-style:italic;}
-82|  .lede{margin-top:22px; max-width:58ch; font-size:clamp(17px,2.1vw,21px); color:var(--ink-soft);}
-83|  .lede-en{margin-top:8px; max-width:64ch; direction:ltr; text-align:right; font-family:var(--display-en);
-84|    font-style:italic; font-size:clamp(15px,1.9vw,18px); color:var(--ink-soft);}
-85|
-86|  .cta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px;}
-87|  .btn{display:inline-flex; align-items:center; gap:10px; font-family:var(--display-ar); font-weight:700; font-size:18px;
-88|    padding:13px 24px; border-radius:14px; text-decoration:none; cursor:pointer; border:1px solid transparent;
-89|    transition:transform .15s ease, box-shadow .15s ease;}
-90|  .btn:hover{transform:translateY(-2px);}
-91|  .btn-primary{background:var(--green); color:#FBF6EA; box-shadow:0 10px 26px -12px color-mix(in oklab, var(--green) 80%, black);}
-92|  :root[data-theme="dark"] .btn-primary{color:#08120C;}
-93|  @media (prefers-color-scheme: dark){ .btn-primary{color:#08120C;} }
-94|  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--hair);}
-95|  .btn small{font-family:var(--mono); font-weight:400; font-size:11px; opacity:.85; letter-spacing:.05em;}
-96|
-97|  .coords{position:absolute; z-index:2; bottom:156px; inset-inline-start:24px; font-family:var(--mono);
-98|    font-size:11px; letter-spacing:.12em; color:var(--ink-soft); direction:ltr; display:flex; gap:18px; opacity:.85;}
-99|
-100|  /* ---------- STRIP ---------- */
-101|  .strip{background:var(--green-deep); color:#EFE7D0;}
-102|  :root[data-theme="dark"] .strip{background:#0A150F;}
-103|  @media (prefers-color-scheme: dark){ .strip{background:#0A150F;} }
-104|  .strip .wrap{display:flex; flex-wrap:wrap; gap:12px 30px; padding-block:20px; align-items:center;}
-105|  .strip span{display:inline-flex; align-items:center; gap:9px; font-size:15px; font-family:var(--display-ar); font-weight:700;}
-106|  .strip .en{font-family:var(--display-en); font-size:12px; opacity:.7; font-weight:600; margin-inline-start:6px;}
-107|  .strip .dot{width:6px; height:6px; border-radius:50%; background:var(--sand); display:inline-block;}
-108|
-109|  /* ---------- SECTIONS ---------- */
-110|  section{padding-block:92px;}
-111|  .sec-head{max-width:62ch; margin-bottom:52px;}
-112|  .sec-head h2{font-size:clamp(30px,4.4vw,46px); margin-top:12px;}
-113|  .sec-head .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic;
-114|    font-size:clamp(17px,2.2vw,22px); color:var(--ink-soft); margin-top:8px; font-weight:600;}
-115|  .sec-head p{margin-top:18px; color:var(--ink-soft); font-size:18px;}
-116|  .sec-head .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; margin-top:6px; font-size:15px;}
-117|
-118|  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
-119|  @media (max-width:760px){ .grid{grid-template-columns:1fr;} }
-120|  .card{position:relative; background:var(--panel); border:1px solid var(--hair); border-radius:18px; padding:30px 28px; overflow:hidden;}
-121|  .card::before{content:""; position:absolute; inset-inline-start:0; top:22px; bottom:22px; width:3px; background:var(--sand); border-radius:3px; opacity:.9;}
-122|  .card .ic{width:38px; height:38px; margin-bottom:16px; color:var(--green);}
-123|  .card h3{font-size:24px;}
-124|  .card .h3-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600; font-size:15px; color:var(--sand); margin-top:2px;}
-125|  .card p{margin-top:12px; color:var(--ink-soft); font-size:16px;}
-126|  .card .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:13.5px; margin-top:5px; color:var(--ink-soft); opacity:.9;}
-127|  .card ul{margin:16px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;}
-128|  .card li{position:relative; padding-inline-start:22px; font-size:15px; color:var(--ink);}
-129|  .card li::before{content:""; position:absolute; inset-inline-start:2px; top:.62em; width:8px; height:8px; border:1.5px solid var(--green); border-radius:50%;}
-130|  .card .num{position:absolute; top:20px; inset-inline-end:24px; font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--sand-soft);}
-131|
-132|  /* ---------- SHOWCASE ---------- */
-133|  .showcase{background:var(--ground-2); border-block:1px solid var(--hair);}
-134|  .showcase .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
-135|  @media (max-width:860px){ .showcase .wrap{grid-template-columns:1fr; gap:36px;} }
-136|  .phone{position:relative; width:270px; aspect-ratio:9/19.5; margin-inline:auto; border-radius:38px; background:#0C1712; border:2px solid var(--hair); box-shadow:0 30px 60px -30px rgba(0,0,0,.5); overflow:hidden;}
-137|  .screen{position:absolute; inset:9px; border-radius:30px; overflow:hidden; background:#0f1a14;}
-138|  .map-canvas{position:absolute; inset:0;}
-139|  .hud{position:absolute; inset:0; padding:14px;}
-140|  .hud-top{position:absolute; top:14px; left:50%; transform:translateX(-50%); background:rgba(8,12,10,.72); color:#EDE7D0; font-family:var(--mono); font-size:9px; letter-spacing:.05em; padding:6px 10px; border-radius:8px; direction:ltr; white-space:nowrap;}
-141|  .hud-dial{position:absolute; top:52px; inset-inline-end:14px; width:44px; height:44px; border-radius:50%; background:rgba(8,12,10,.72); border:2px solid var(--sand); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-142|  .hud-dial b{font-size:16px; line-height:1;}
-143|  .hud-dial i{font-style:normal; font-size:7px; color:#cbb; letter-spacing:.08em;}
-144|  .ptt{position:absolute; bottom:16px; left:50%; transform:translateX(-50%); width:64px; height:64px; border-radius:50%; background:var(--green); border:3px solid #fff; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 8px 20px -6px rgba(0,0,0,.6);}
-145|  .menu-pill{position:absolute; inset-inline-start:14px; top:52%; transform:translateY(-50%); background:rgba(15,26,20,.9); border:1px solid var(--sand); color:#EDE7D0; font-family:var(--display-ar); font-weight:700; font-size:12px; padding:10px 8px; border-radius:12px; text-align:center; width:52px;}
-146|
-147|  .why h2{font-size:clamp(28px,4vw,40px);}
-148|  .why .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic; font-weight:600; font-size:clamp(16px,2.2vw,20px); color:var(--ink-soft); margin-top:8px;}
-149|  .why p{margin-top:18px; color:var(--ink-soft); font-size:17px; max-width:46ch;}
-150|  .why .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:15px; margin-top:8px; max-width:52ch;}
-151|  .why .stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:30px;}
-152|  .stat{flex:1 1 130px; background:var(--panel); border:1px solid var(--hair); border-radius:14px; padding:16px 18px;}
-153|  .stat b{display:block; font-family:var(--display-ar); font-weight:700; font-size:30px; color:var(--green);}
-154|  .stat span{font-size:13px; color:var(--ink-soft);}
-155|  .stat .en{font-family:var(--display-en); font-size:11px; color:var(--ink-soft); opacity:.75; font-weight:600;}
-156|
-157|  /* ---------- FINAL ---------- */
-158|  .final{position:relative; overflow:hidden; background:var(--green); color:#F6EFDD; text-align:center;}
-159|  :root[data-theme="dark"] .final{background:var(--green-deep);}
-160|  @media (prefers-color-scheme: dark){ .final{background:var(--green-deep);} }
-161|  .final .contours{color:#F6EFDD; opacity:.14;}
-162|  .final .wrap{position:relative; z-index:2; padding-block:96px; display:flex; flex-direction:column; align-items:center;}
-163|  .final h2{font-size:clamp(34px,5.4vw,60px); color:#FBF6EA;}
-164|  .final .h2-en{font-family:var(--display-en); font-style:italic; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:color-mix(in oklab,#FBF6EA 82%, transparent); margin-top:8px; direction:ltr;}
-165|  .final p{margin-top:16px; color:color-mix(in oklab,#FBF6EA 80%, transparent); font-size:19px; max-width:52ch;}
-166|  .final .cta-row{justify-content:center;}
-167|  .final .btn-primary{background:#FBF6EA; color:var(--green-deep);}
-168|  .final .btn-ghost{color:#FBF6EA; border-color:color-mix(in oklab,#FBF6EA 40%, transparent);}
-169|
-170|  footer{background:var(--ground); border-top:1px solid var(--hair);}
-171|  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; padding-block:34px; align-items:center;}
-172|  footer .site{font-family:var(--mono); font-size:13px; letter-spacing:.1em; color:var(--ink); direction:ltr;}
-173|  footer .meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); direction:ltr; letter-spacing:.08em;}
-174|
-175|  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
-176|  .reveal.in{opacity:1; transform:none;}
-177|  .needle{transform-origin:50% 50%; animation:drift 9s ease-in-out infinite;}
-178|  @keyframes drift{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
-179|  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} .needle{animation:none !important;} }
-180|</style>
-181|
-182|<div class="athar">
-183|
-184|  <!-- HERO -->
-185|  <header class="hero">
-186|    <div class="hero-sky"></div>
-187|    <svg class="contours" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-188|      <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.55">
-189|        <path d="M-50 480 C 240 400 430 520 640 470 S 1020 360 1260 430"/>
-190|        <path d="M-50 520 C 240 440 430 560 640 510 S 1020 400 1260 470"/>
-191|        <path d="M-50 560 C 240 480 430 600 640 550 S 1020 440 1260 510"/>
-192|        <path d="M-50 420 C 260 350 420 450 660 410 S 1040 320 1260 380"/>
-193|        <path d="M-50 360 C 280 300 440 390 680 360 S 1060 280 1260 330"/>
-194|      </g>
-195|    </svg>
-196|    <div class="wrap">
-197|      <div class="brandrow">
-198|        <img src="logo.png" class="mark" alt="أثر" style="width:46px;height:46px;flex:none"/>
-206|        <div>
-207|          <div class="brandname">أثر</div>
-208|          <div class="brandlatin">A T H A R</div>
-209|        </div>
-210|      </div>
-211|
-212|      <span class="eyebrow">رفيق الرحلات البرّية · Off-road companion</span>
-213|      <h1>دليلك في البرّ —<br><span class="amber">بلا شبكة، بلا ضياع.</span></h1>
-214|      <div class="h1-en">Your guide off the grid — no signal, no getting lost.</div>
-215|      <p class="lede">خرائط أقمار صناعية تعمل بلا إنترنت، تخاطب صوتي فوري بين المجموعة، ومساعد ذكي ينفّذ أوامرك — كل ما تحتاجه لرحلتك في الصحراء في تطبيق واحد.</p>
-216|      <p class="lede-en">Offline satellite maps, instant group walkie-talkie, and an AI copilot that acts on your commands — everything your desert trip needs, in one app.</p>
-217|      <div class="cta-row">
-218|        <a class="btn btn-primary" href="#download"> App Store <small>iOS</small></a>
-219|        <a class="btn btn-ghost" href="#download">Android <small>APK</small></a>
-220|      </div>
-221|    </div>
-222|    <div class="coords mono"><span>24°28′N · 54°22′E</span><span>ELEV 12M</span><span>OFFLINE ✓</span></div>
-223|    <svg class="dunes" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
-224|      <path d="M0 120 C 300 60 520 150 760 110 C 980 74 1080 130 1200 96 L1200 200 L0 200 Z" fill="var(--sand-soft)" opacity="0.55"/>
-225|      <path d="M0 150 C 260 100 500 175 780 140 C 1000 112 1110 165 1200 140 L1200 200 L0 200 Z" fill="var(--sand)" opacity="0.9"/>
-226|    </svg>
-227|  </header>
-228|
-229|  <!-- STRIP -->
-230|  <div class="strip"><div class="wrap">
-231|    <span>يعمل بلا إنترنت <span class="en">Works offline</span></span>
-232|    <span><span class="dot"></span> iOS &amp; Android</span>
-233|    <span><span class="dot"></span> خرائط أقمار <span class="en">Satellite maps</span></span>
-234|    <span><span class="dot"></span> تخاطب صوتي <span class="en">Walkie-talkie</span></span>
-235|    <span><span class="dot"></span> قبلة ومواقيت <span class="en">Qibla &amp; prayer</span></span>
-236|    <span><span class="dot"></span> عربي / English</span>
-237|  </div></div>
-238|
-239|  <!-- FEATURES -->
-240|  <section class="wrap">
-241|    <div class="sec-head reveal">
-242|      <span class="eyebrow">ما الذي يميّز أثر · What makes Athar</span>
-243|      <h2>كل أدوات الرحلة، في مكان واحد</h2>
-244|      <div class="h2-en">Every tool for the journey, in one place</div>
-245|      <p>صُمّم أثر للبرّ الحقيقي: حيث تنقطع الشبكة، ويهمّ أن تعرف طريقك، وأن تبقى على تواصل مع مجموعتك.</p>
-246|      <div class="p-en">Built for the real backcountry — where the signal drops, but knowing your way and staying with your group still matters.</div>
-247|    </div>
-248|
-249|    <div class="grid">
-250|      <article class="card reveal">
-251|        <span class="num">01</span>
-252|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>
-253|        <h3>خرائط تعمل بلا إنترنت</h3>
-254|        <div class="h3-en">Offline maps</div>
-255|        <p>نزّل مناطق صحراوية بدقة أقمار صناعية عالية قبل رحلتك، وتنقّل بثقة حتى بلا أي شبكة.</p>
-256|        <div class="p-en">Download high-res satellite regions before you go, and navigate with zero signal.</div>
-257|        <ul>
-258|          <li>خرائط جاهزة عالية الدقة (z17) · Ready high-res maps</li>
-259|          <li>تتبّع GPS مباشر ودائرة السرعة · Live GPS &amp; speed</li>
-260|          <li>تسجيل الرحلات والعودة لنقطة البداية · Trip recording &amp; backtrack</li>
-261|          <li>علامات ومواقع: مخيّم، ماء، خطر · Waypoints</li>
-262|        </ul>
-263|      </article>
-264|
-265|      <article class="card reveal">
-266|        <span class="num">02</span>
-267|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-268|        <h3>تخاطب صوتي فوري</h3>
-269|        <div class="h3-en">Instant walkie-talkie</div>
-270|        <p>اضغط وتكلّم كأنك تحمل جهاز لاسلكي — يوصل صوتك لكل المجموعة، حتى والتطبيق في الخلفية.</p>
-271|        <div class="p-en">Push to talk like a two-way radio — your voice reaches the whole group, even in the background.</div>
-272|        <ul>
-273|          <li>زر تحدّث كبير · Big push-to-talk</li>
-274|          <li>رسائل صوتية وتشغيل تلقائي · Voice notes &amp; auto-play</li>
-275|          <li>ترتيب الأصوات بلا تداخل · Ordered, no overlap</li>
-276|          <li>تنبيه حتى لو التطبيق مقفول · Alerts when closed</li>
-277|        </ul>
-278|      </article>
-279|
-280|      <article class="card reveal">
-281|        <span class="num">03</span>
-282|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16 20a4.5 4.5 0 0 1 6-4"/></svg>
-283|        <h3>مجموعات ومحادثات</h3>
-284|        <div class="h3-en">Groups &amp; chats</div>
-285|        <p>أنشئ مجموعة رحلتك، شارك موقعك الحيّ على الخريطة، وتابع أفراد مجموعتك لحظة بلحظة.</p>
-286|        <div class="p-en">Create your trip group, share your live location, and track everyone on the map.</div>
-287|        <ul>
-288|          <li>مجموعات ومحادثات مباشرة · Groups &amp; DMs</li>
-289|          <li>مواقع المجموعة الحيّة · Live member positions</li>
-290|          <li>طلبات صداقة وملفات بصور · Requests &amp; profiles</li>
-291|          <li>مشاركة العلامات والرحلات · Share waypoints &amp; trips</li>
-292|        </ul>
-293|      </article>
-294|
-295|      <article class="card reveal">
-296|        <span class="num">04</span>
-297|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M9 11v2M15 11v2M12 3v3M8 21h8"/></svg>
-298|        <h3>مساعد ذكي ينفّذ أوامرك</h3>
-299|        <div class="h3-en">An AI copilot that acts</div>
-300|        <p>لا يجيب فقط — بل يتصرّف. اطلب منه بصوتك أو كتابتك وهو ينفّذ داخل التطبيق مباشرة.</p>
-301|        <div class="p-en">It doesn't just answer — it acts. Ask by voice or text and it runs the command in the app.</div>
-302|        <ul>
-303|          <li>«اجعلها وجهتي» → يحدّدها على الخريطة</li>
-304|          <li>«أرسل لمحمد» → بعد تأكيدك · Send a message</li>
-305|          <li>بحث الأماكن القريبة · Nearby search</li>
-306|          <li>أوامر ورد صوتي اختياري · Voice in &amp; out</li>
-307|        </ul>
-308|      </article>
-309|
-310|      <article class="card reveal">
-311|        <span class="num">05</span>
-312|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z"/><path d="m9 12 2 2 4-4"/></svg>
-313|        <h3>القبلة والمواقيت والطوارئ</h3>
-314|        <div class="h3-en">Qibla, prayer &amp; emergency</div>
-315|        <p>رفيقك الروحي والآمن أينما كنت — يحسب كل شيء محلياً من موقعك بلا إنترنت.</p>
-316|        <div class="p-en">Your spiritual and safety companion — all computed locally, offline.</div>
-317|        <ul>
-318|          <li>عدّاد الصلاة القادمة والشروق · Prayer countdown</li>
-319|          <li>بوصلة قبلة دقيقة · Accurate qibla</li>
-320|          <li>أرقام طوارئ حسب دولتك · Local emergency numbers</li>
-321|          <li>زر SOS بارز · Prominent SOS</li>
-322|        </ul>
-323|      </article>
-324|
-325|      <article class="card reveal">
-326|        <span class="num">06</span>
-327|        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-328|        <h3>لغتان وحساب آمن</h3>
-329|        <div class="h3-en">Bilingual &amp; secure account</div>
-330|        <p>واجهة عربية أصيلة أو إنجليزية بضغطة، وحساب يبقى معك على أي جهاز.</p>
-331|        <div class="p-en">A true Arabic interface or English in a tap, and an account that follows you to any device.</div>
-332|        <ul>
-333|          <li>عربي / English — تبديل فوري</li>
-334|          <li>استرجاع الحساب بالبريد · Email recovery</li>
-335|          <li>كود صداقة مميّز · Unique friend code</li>
-336|          <li>إشعارات فورية · Push notifications</li>
-337|        </ul>
-338|      </article>
-339|    </div>
-340|  </section>
-341|
-342|  <!-- SHOWCASE -->
-343|  <section class="showcase"><div class="wrap">
-344|    <div class="reveal">
-345|      <div class="phone" role="img" aria-label="واجهة خريطة أثر · Athar map screen">
-346|        <div class="screen">
-347|          <canvas class="map-canvas" id="mapc" width="260" height="520"></canvas>
-348|          <div class="hud">
-349|            <div class="hud-top">🚗 48 كم/س · 🧭 312° · ±4م</div>
-350|            <div class="menu-pill">☰<br>خصائص</div>
-351|            <div class="hud-dial"><b>48</b><i>كم/س</i></div>
-352|            <div class="ptt">🎙️</div>
-353|          </div>
-354|        </div>
-355|      </div>
-356|    </div>
-357|    <div class="why reveal">
-358|      <span class="eyebrow">لماذا أثر · Why Athar</span>
-359|      <h2>لأن أفضل الطرق لا تصلها الشبكة</h2>
-360|      <div class="h2-en">Because the best routes have no signal</div>
-361|      <p>في قلب الصحراء تنقطع التغطية، لكن رحلتك يجب أن تستمر. أثر يجمع الخريطة والتواصل والاتجاه والأمان — كلها تعمل دون اتصال — لتبقى واثقاً من طريقك، وقريباً من رفاقك.</p>
-362|      <div class="p-en">Deep in the desert the coverage fades, but your trip goes on. Athar brings maps, comms, direction, and safety together — all offline — so you stay sure of your way and close to your group.</div>
-363|      <div class="stats">
-364|        <div class="stat"><b>0</b><span>شبكة مطلوبة للتنقّل</span><span class="en">signal to navigate</span></div>
-365|        <div class="stat"><b>z17</b><span>دقة الخرائط الجاهزة</span><span class="en">map detail</span></div>
-366|        <div class="stat"><b>2</b><span>منصّتان</span><span class="en">iOS &amp; Android</span></div>
-367|      </div>
-368|    </div>
-369|  </div></section>
-370|
-371|  <!-- FINAL -->
-372|  <section class="final" id="download">
-373|    <svg class="contours" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-374|      <g fill="none" stroke="currentColor" stroke-width="1.2">
-375|        <path d="M-50 280 C 240 210 430 320 640 270 S 1020 180 1260 240"/>
-376|        <path d="M-50 320 C 240 250 430 360 640 310 S 1020 220 1260 280"/>
-377|        <path d="M-50 240 C 260 180 420 270 660 230 S 1040 150 1260 200"/>
-378|      </g>
-379|    </svg>
-380|    <div class="wrap">
-381|      <svg class="mark needle" viewBox="0 0 100 100" width="56" height="56" aria-hidden="true" style="margin-bottom:24px">
-382|        <circle cx="50" cy="50" r="34" fill="none" stroke="#FBF6EA" stroke-width="3" opacity="0.5"/>
-383|        <path d="M50 24 l8 26 -8 26 -8 -26 z" fill="var(--sand)"/>
-384|        <circle cx="50" cy="50" r="4" fill="#FBF6EA"/>
-385|      </svg>
-386|      <h2>ابدأ رحلتك مع أثر</h2>
-387|      <div class="h2-en">Start your journey with Athar</div>
-388|      <p>حمّل التطبيق الآن، ونزّل خريطة منطقتك قبل أن تنطلق. البرّ ينتظرك.</p>
-389|      <div class="cta-row">
-390|        <a class="btn btn-primary" href="#"> App Store <small>iOS</small></a>
-391|        <a class="btn btn-ghost" href="#">Android <small>APK</small></a>
-392|      </div>
-393|    </div>
-394|  </section>
-395|
-396|  <footer><div class="wrap">
-397|    <div class="site">uae-athr.com</div>
-398|    <div class="meta">أثر · ATHAR — NAVIGATE THE WILD · © 2026</div>
-399|  </div></footer>
-400|</div>
-401|
-402|<script>
-403|  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
-404|  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-405|  (function(){
-406|    const c=document.getElementById('mapc'); if(!c) return; const x=c.getContext('2d'); const W=c.width,H=c.height;
-407|    const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#b9964f'); g.addColorStop(.5,'#a5813f'); g.addColorStop(1,'#8f6d34');
-408|    x.fillStyle=g; x.fillRect(0,0,W,H);
-409|    x.globalAlpha=.18; for(let i=-H;i<W+H;i+=14){x.strokeStyle=i%28?'#6f5626':'#d8b366'; x.lineWidth=6; x.beginPath(); x.moveTo(i,0); x.lineTo(i-H,H); x.stroke();}
-410|    x.globalAlpha=.10; for(let i=0;i<180;i++){x.fillStyle=Math.random()>.5?'#5f4a20':'#e5c583'; x.fillRect(Math.random()*W,Math.random()*H,2,2);}
-411|    x.globalAlpha=1; x.strokeStyle='rgba(60,48,22,.55)'; x.lineWidth=10; x.lineCap='round';
-412|    x.beginPath(); x.moveTo(-10,120); x.bezierCurveTo(80,180,120,260,60,340); x.bezierCurveTo(20,400,120,470,240,500); x.stroke();
-413|    x.setLineDash([8,7]); x.strokeStyle='#5E6AD2'; x.lineWidth=3; x.beginPath(); x.moveTo(130,470); x.bezierCurveTo(150,360,110,270,180,190); x.lineTo(210,120); x.stroke(); x.setLineDash([]);
-414|    x.fillStyle='#E5484D'; x.beginPath(); x.arc(210,116,7,0,7); x.fill();
-415|    x.fillStyle='#fff'; x.beginPath(); x.arc(130,472,7,0,7); x.fill(); x.fillStyle='#5E6AD2'; x.beginPath(); x.arc(130,472,4.5,0,7); x.fill();
-416|    x.fillStyle='#12A594'; [[90,300],[160,340]].forEach(p=>{x.beginPath(); x.arc(p[0],p[1],5,0,7); x.fill();});
-417|  })();
-418|</script>
-419|
-420|</body>
-421|</html>
-422|
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>أثر · Athar</title>
+<meta name="description" content="أثر — تطبيق الملاحة البرّية والتواصل: خرائط تعمل بلا إنترنت، تخاطب صوتي، ومساعد ذكي.">
+<style>*{margin:0;padding:0;box-sizing:border-box}</style>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
+    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
+    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
+    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
+    --accent:var(--green);
+    --maxw:1120px;
+    /* Arabic calligraphic display (Naskh/Majalla) → graceful fallbacks */
+    --display-ar:"Sakkal Majalla","Aref Ruqaa","Traditional Arabic","Arabic Typesetting","Noto Naskh Arabic","Amiri",serif;
+    --body-ar:"Segoe UI","Sakkal Majalla","Geeza Pro","SF Arabic",Tahoma,sans-serif;
+    --display-en:"Iowan Old Style","Palatino Linotype","Palatino",Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
+      --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
+      --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
+      --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
+    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
+    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
+    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
+    --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
+    --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
+    --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .athar{direction:rtl; text-align:right; background:var(--ground); color:var(--ink);
+    font-family:var(--body-ar); line-height:1.75; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:24px;}
+
+  h1,h2,h3{font-family:var(--display-ar); font-weight:700; line-height:1.28; text-wrap:balance; margin:0;}
+  p{margin:0;}
+  /* English secondary layer — quieter, latin serif, LTR */
+  .en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;}
+  .en-body{font-family:var(--display-en); direction:ltr; text-align:right; color:var(--ink-soft); font-style:italic;}
+  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--sand); direction:ltr; text-align:right; display:inline-block;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--hair);}
+  .hero-sky{position:absolute; inset:0; z-index:0;
+    background:radial-gradient(120% 90% at 78% -10%, color-mix(in oklab, var(--sand-soft) 55%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--sky), var(--ground));}
+  .contours{position:absolute; inset:0; z-index:0; opacity:.5; color:var(--green);}
+  :root[data-theme="dark"] .contours{opacity:.28;}
+  :root[data-theme="light"] .contours{opacity:.5;}
+  @media (prefers-color-scheme: dark){ .contours{opacity:.28;} }
+  .dunes{position:absolute; left:0; right:0; bottom:-1px; z-index:0;}
+  .hero .wrap{position:relative; z-index:2; padding-top:84px; padding-bottom:196px;}
+
+  .brandrow{display:flex; align-items:center; gap:14px; margin-bottom:40px;}
+  .mark{width:46px; height:46px; flex:none;}
+  .brandname{font-family:var(--display-ar); font-weight:700; font-size:26px;}
+  .brandlatin{font-family:var(--mono); font-size:11px; letter-spacing:.38em; color:var(--ink-soft); direction:ltr;}
+
+  .hero h1{font-size:clamp(46px,8vw,86px); letter-spacing:0;}
+  .hero h1 .amber{color:var(--sand);}
+  .hero .h1-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;
+    font-size:clamp(20px,3vw,30px); color:var(--ink); margin-top:14px; font-style:italic;}
+  .lede{margin-top:22px; max-width:58ch; font-size:clamp(17px,2.1vw,21px); color:var(--ink-soft);}
+  .lede-en{margin-top:8px; max-width:64ch; direction:ltr; text-align:right; font-family:var(--display-en);
+    font-style:italic; font-size:clamp(15px,1.9vw,18px); color:var(--ink-soft);}
+
+  .cta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px;}
+  .btn{display:inline-flex; align-items:center; gap:10px; font-family:var(--display-ar); font-weight:700; font-size:18px;
+    padding:13px 24px; border-radius:14px; text-decoration:none; cursor:pointer; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--green); color:#FBF6EA; box-shadow:0 10px 26px -12px color-mix(in oklab, var(--green) 80%, black);}
+  :root[data-theme="dark"] .btn-primary{color:#08120C;}
+  @media (prefers-color-scheme: dark){ .btn-primary{color:#08120C;} }
+  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--hair);}
+  .btn small{font-family:var(--mono); font-weight:400; font-size:11px; opacity:.85; letter-spacing:.05em;}
+
+  .coords{position:absolute; z-index:2; bottom:156px; inset-inline-start:24px; font-family:var(--mono);
+    font-size:11px; letter-spacing:.12em; color:var(--ink-soft); direction:ltr; display:flex; gap:18px; opacity:.85;}
+
+  /* ---------- STRIP ---------- */
+  .strip{background:var(--green-deep); color:#EFE7D0;}
+  :root[data-theme="dark"] .strip{background:#0A150F;}
+  @media (prefers-color-scheme: dark){ .strip{background:#0A150F;} }
+  .strip .wrap{display:flex; flex-wrap:wrap; gap:12px 30px; padding-block:20px; align-items:center;}
+  .strip span{display:inline-flex; align-items:center; gap:9px; font-size:15px; font-family:var(--display-ar); font-weight:700;}
+  .strip .en{font-family:var(--display-en); font-size:12px; opacity:.7; font-weight:600; margin-inline-start:6px;}
+  .strip .dot{width:6px; height:6px; border-radius:50%; background:var(--sand); display:inline-block;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding-block:92px;}
+  .sec-head{max-width:62ch; margin-bottom:52px;}
+  .sec-head h2{font-size:clamp(30px,4.4vw,46px); margin-top:12px;}
+  .sec-head .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic;
+    font-size:clamp(17px,2.2vw,22px); color:var(--ink-soft); margin-top:8px; font-weight:600;}
+  .sec-head p{margin-top:18px; color:var(--ink-soft); font-size:18px;}
+  .sec-head .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; margin-top:6px; font-size:15px;}
+
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:760px){ .grid{grid-template-columns:1fr;} }
+  .card{position:relative; background:var(--panel); border:1px solid var(--hair); border-radius:18px; padding:30px 28px; overflow:hidden;}
+  .card::before{content:""; position:absolute; inset-inline-start:0; top:22px; bottom:22px; width:3px; background:var(--sand); border-radius:3px; opacity:.9;}
+  .card .ic{width:38px; height:38px; margin-bottom:16px; color:var(--green);}
+  .card h3{font-size:24px;}
+  .card .h3-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600; font-size:15px; color:var(--sand); margin-top:2px;}
+  .card p{margin-top:12px; color:var(--ink-soft); font-size:16px;}
+  .card .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:13.5px; margin-top:5px; color:var(--ink-soft); opacity:.9;}
+  .card ul{margin:16px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .card li{position:relative; padding-inline-start:22px; font-size:15px; color:var(--ink);}
+  .card li::before{content:""; position:absolute; inset-inline-start:2px; top:.62em; width:8px; height:8px; border:1.5px solid var(--green); border-radius:50%;}
+  .card .num{position:absolute; top:20px; inset-inline-end:24px; font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--sand-soft);}
+
+  /* ---------- SHOWCASE ---------- */
+  .showcase{background:var(--ground-2); border-block:1px solid var(--hair);}
+  .showcase .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
+  @media (max-width:860px){ .showcase .wrap{grid-template-columns:1fr; gap:36px;} }
+  .phone{position:relative; width:270px; aspect-ratio:9/19.5; margin-inline:auto; border-radius:38px; background:#0C1712; border:2px solid var(--hair); box-shadow:0 30px 60px -30px rgba(0,0,0,.5); overflow:hidden;}
+  .screen{position:absolute; inset:9px; border-radius:30px; overflow:hidden; background:#0f1a14;}
+  .map-canvas{position:absolute; inset:0;}
+  .hud{position:absolute; inset:0; padding:14px;}
+  .hud-top{position:absolute; top:14px; left:50%; transform:translateX(-50%); background:rgba(8,12,10,.72); color:#EDE7D0; font-family:var(--mono); font-size:9px; letter-spacing:.05em; padding:6px 10px; border-radius:8px; direction:ltr; white-space:nowrap;}
+  .hud-dial{position:absolute; top:52px; inset-inline-end:14px; width:44px; height:44px; border-radius:50%; background:rgba(8,12,10,.72); border:2px solid var(--sand); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .hud-dial b{font-size:16px; line-height:1;}
+  .hud-dial i{font-style:normal; font-size:7px; color:#cbb; letter-spacing:.08em;}
+  .ptt{position:absolute; bottom:16px; left:50%; transform:translateX(-50%); width:64px; height:64px; border-radius:50%; background:var(--green); border:3px solid #fff; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 8px 20px -6px rgba(0,0,0,.6);}
+  .menu-pill{position:absolute; inset-inline-start:14px; top:52%; transform:translateY(-50%); background:rgba(15,26,20,.9); border:1px solid var(--sand); color:#EDE7D0; font-family:var(--display-ar); font-weight:700; font-size:12px; padding:10px 8px; border-radius:12px; text-align:center; width:52px;}
+
+  .why h2{font-size:clamp(28px,4vw,40px);}
+  .why .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic; font-weight:600; font-size:clamp(16px,2.2vw,20px); color:var(--ink-soft); margin-top:8px;}
+  .why p{margin-top:18px; color:var(--ink-soft); font-size:17px; max-width:46ch;}
+  .why .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:15px; margin-top:8px; max-width:52ch;}
+  .why .stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:30px;}
+  .stat{flex:1 1 130px; background:var(--panel); border:1px solid var(--hair); border-radius:14px; padding:16px 18px;}
+  .stat b{display:block; font-family:var(--display-ar); font-weight:700; font-size:30px; color:var(--green);}
+  .stat span{font-size:13px; color:var(--ink-soft);}
+  .stat .en{font-family:var(--display-en); font-size:11px; color:var(--ink-soft); opacity:.75; font-weight:600;}
+
+  /* ---------- FINAL ---------- */
+  .final{position:relative; overflow:hidden; background:var(--green); color:#F6EFDD; text-align:center;}
+  :root[data-theme="dark"] .final{background:var(--green-deep);}
+  @media (prefers-color-scheme: dark){ .final{background:var(--green-deep);} }
+  .final .contours{color:#F6EFDD; opacity:.14;}
+  .final .wrap{position:relative; z-index:2; padding-block:96px; display:flex; flex-direction:column; align-items:center;}
+  .final h2{font-size:clamp(34px,5.4vw,60px); color:#FBF6EA;}
+  .final .h2-en{font-family:var(--display-en); font-style:italic; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:color-mix(in oklab,#FBF6EA 82%, transparent); margin-top:8px; direction:ltr;}
+  .final p{margin-top:16px; color:color-mix(in oklab,#FBF6EA 80%, transparent); font-size:19px; max-width:52ch;}
+  .final .cta-row{justify-content:center;}
+  .final .btn-primary{background:#FBF6EA; color:var(--green-deep);}
+  .final .btn-ghost{color:#FBF6EA; border-color:color-mix(in oklab,#FBF6EA 40%, transparent);}
+
+  footer{background:var(--ground); border-top:1px solid var(--hair);}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; padding-block:34px; align-items:center;}
+  footer .site{font-family:var(--mono); font-size:13px; letter-spacing:.1em; color:var(--ink); direction:ltr;}
+  footer .meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); direction:ltr; letter-spacing:.08em;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  .needle{transform-origin:50% 50%; animation:drift 9s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} .needle{animation:none !important;} }
+</style>
+
+<div class="athar">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-sky"></div>
+    <svg class="contours" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.55">
+        <path d="M-50 480 C 240 400 430 520 640 470 S 1020 360 1260 430"/>
+        <path d="M-50 520 C 240 440 430 560 640 510 S 1020 400 1260 470"/>
+        <path d="M-50 560 C 240 480 430 600 640 550 S 1020 440 1260 510"/>
+        <path d="M-50 420 C 260 350 420 450 660 410 S 1040 320 1260 380"/>
+        <path d="M-50 360 C 280 300 440 390 680 360 S 1060 280 1260 330"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div class="brandrow">
+        <img src="logo.png" class="mark" alt="أثر" style="width:46px;height:46px;flex:none"/>
+        <div>
+          <div class="brandname">أثر</div>
+          <div class="brandlatin">A T H A R</div>
+        </div>
+      </div>
+
+      <span class="eyebrow">رفيق الرحلات البرّية · Off-road companion</span>
+      <h1>دليلك في البرّ —<br><span class="amber">بلا شبكة، بلا ضياع.</span></h1>
+      <div class="h1-en">Your guide off the grid — no signal, no getting lost.</div>
+      <p class="lede">خرائط أقمار صناعية تعمل بلا إنترنت، تخاطب صوتي فوري بين المجموعة، ومساعد ذكي ينفّذ أوامرك — كل ما تحتاجه لرحلتك في الصحراء في تطبيق واحد.</p>
+      <p class="lede-en">Offline satellite maps, instant group walkie-talkie, and an AI copilot that acts on your commands — everything your desert trip needs, in one app.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#download"> App Store <small>iOS</small></a>
+        <a class="btn btn-ghost" href="#download">Android <small>APK</small></a>
+      </div>
+    </div>
+    <div class="coords mono"><span>24°28′N · 54°22′E</span><span>ELEV 12M</span><span>OFFLINE ✓</span></div>
+    <svg class="dunes" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 120 C 300 60 520 150 760 110 C 980 74 1080 130 1200 96 L1200 200 L0 200 Z" fill="var(--sand-soft)" opacity="0.55"/>
+      <path d="M0 150 C 260 100 500 175 780 140 C 1000 112 1110 165 1200 140 L1200 200 L0 200 Z" fill="var(--sand)" opacity="0.9"/>
+    </svg>
+  </header>
+
+  <!-- STRIP -->
+  <div class="strip"><div class="wrap">
+    <span>يعمل بلا إنترنت <span class="en">Works offline</span></span>
+    <span><span class="dot"></span> iOS &amp; Android</span>
+    <span><span class="dot"></span> خرائط أقمار <span class="en">Satellite maps</span></span>
+    <span><span class="dot"></span> تخاطب صوتي <span class="en">Walkie-talkie</span></span>
+    <span><span class="dot"></span> قبلة ومواقيت <span class="en">Qibla &amp; prayer</span></span>
+    <span><span class="dot"></span> عربي / English</span>
+  </div></div>
+
+  <!-- FEATURES -->
+  <section class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">ما الذي يميّز أثر · What makes Athar</span>
+      <h2>كل أدوات الرحلة، في مكان واحد</h2>
+      <div class="h2-en">Every tool for the journey, in one place</div>
+      <p>صُمّم أثر للبرّ الحقيقي: حيث تنقطع الشبكة، ويهمّ أن تعرف طريقك، وأن تبقى على تواصل مع مجموعتك.</p>
+      <div class="p-en">Built for the real backcountry — where the signal drops, but knowing your way and staying with your group still matters.</div>
+    </div>
+
+    <div class="grid">
+      <article class="card reveal">
+        <span class="num">01</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>
+        <h3>خرائط تعمل بلا إنترنت</h3>
+        <div class="h3-en">Offline maps</div>
+        <p>نزّل مناطق صحراوية بدقة أقمار صناعية عالية قبل رحلتك، وتنقّل بثقة حتى بلا أي شبكة.</p>
+        <div class="p-en">Download high-res satellite regions before you go, and navigate with zero signal.</div>
+        <ul>
+          <li>خرائط جاهزة عالية الدقة (z17) · Ready high-res maps</li>
+          <li>تتبّع GPS مباشر ودائرة السرعة · Live GPS &amp; speed</li>
+          <li>تسجيل الرحلات والعودة لنقطة البداية · Trip recording &amp; backtrack</li>
+          <li>علامات ومواقع: مخيّم، ماء، خطر · Waypoints</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <span class="num">02</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <h3>تخاطب صوتي فوري</h3>
+        <div class="h3-en">Instant walkie-talkie</div>
+        <p>اضغط وتكلّم كأنك تحمل جهاز لاسلكي — يوصل صوتك لكل المجموعة، حتى والتطبيق في الخلفية.</p>
+        <div class="p-en">Push to talk like a two-way radio — your voice reaches the whole group, even in the background.</div>
+        <ul>
+          <li>زر تحدّث كبير · Big push-to-talk</li>
+          <li>رسائل صوتية وتشغيل تلقائي · Voice notes &amp; auto-play</li>
+          <li>ترتيب الأصوات بلا تداخل · Ordered, no overlap</li>
+          <li>تنبيه حتى لو التطبيق مقفول · Alerts when closed</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <span class="num">03</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16 20a4.5 4.5 0 0 1 6-4"/></svg>
+        <h3>مجموعات ومحادثات</h3>
+        <div class="h3-en">Groups &amp; chats</div>
+        <p>أنشئ مجموعة رحلتك، شارك موقعك الحيّ على الخريطة، وتابع أفراد مجموعتك لحظة بلحظة.</p>
+        <div class="p-en">Create your trip group, share your live location, and track everyone on the map.</div>
+        <ul>
+          <li>مجموعات ومحادثات مباشرة · Groups &amp; DMs</li>
+          <li>مواقع المجموعة الحيّة · Live member positions</li>
+          <li>طلبات صداقة وملفات بصور · Requests &amp; profiles</li>
+          <li>مشاركة العلامات والرحلات · Share waypoints &amp; trips</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <span class="num">04</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M9 11v2M15 11v2M12 3v3M8 21h8"/></svg>
+        <h3>مساعد ذكي ينفّذ أوامرك</h3>
+        <div class="h3-en">An AI copilot that acts</div>
+        <p>لا يجيب فقط — بل يتصرّف. اطلب منه بصوتك أو كتابتك وهو ينفّذ داخل التطبيق مباشرة.</p>
+        <div class="p-en">It doesn't just answer — it acts. Ask by voice or text and it runs the command in the app.</div>
+        <ul>
+          <li>«اجعلها وجهتي» → يحدّدها على الخريطة</li>
+          <li>«أرسل لمحمد» → بعد تأكيدك · Send a message</li>
+          <li>بحث الأماكن القريبة · Nearby search</li>
+          <li>أوامر ورد صوتي اختياري · Voice in &amp; out</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <span class="num">05</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3>القبلة والمواقيت والطوارئ</h3>
+        <div class="h3-en">Qibla, prayer &amp; emergency</div>
+        <p>رفيقك الروحي والآمن أينما كنت — يحسب كل شيء محلياً من موقعك بلا إنترنت.</p>
+        <div class="p-en">Your spiritual and safety companion — all computed locally, offline.</div>
+        <ul>
+          <li>عدّاد الصلاة القادمة والشروق · Prayer countdown</li>
+          <li>بوصلة قبلة دقيقة · Accurate qibla</li>
+          <li>أرقام طوارئ حسب دولتك · Local emergency numbers</li>
+          <li>زر SOS بارز · Prominent SOS</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <span class="num">06</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        <h3>لغتان وحساب آمن</h3>
+        <div class="h3-en">Bilingual &amp; secure account</div>
+        <p>واجهة عربية أصيلة أو إنجليزية بضغطة، وحساب يبقى معك على أي جهاز.</p>
+        <div class="p-en">A true Arabic interface or English in a tap, and an account that follows you to any device.</div>
+        <ul>
+          <li>عربي / English — تبديل فوري</li>
+          <li>استرجاع الحساب بالبريد · Email recovery</li>
+          <li>كود صداقة مميّز · Unique friend code</li>
+          <li>إشعارات فورية · Push notifications</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section class="showcase"><div class="wrap">
+    <div class="reveal">
+      <div class="phone" role="img" aria-label="واجهة خريطة أثر · Athar map screen">
+        <div class="screen">
+          <canvas class="map-canvas" id="mapc" width="260" height="520"></canvas>
+          <div class="hud">
+            <div class="hud-top">🚗 48 كم/س · 🧭 312° · ±4م</div>
+            <div class="menu-pill">☰<br>خصائص</div>
+            <div class="hud-dial"><b>48</b><i>كم/س</i></div>
+            <div class="ptt">🎙️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why reveal">
+      <span class="eyebrow">لماذا أثر · Why Athar</span>
+      <h2>لأن أفضل الطرق لا تصلها الشبكة</h2>
+      <div class="h2-en">Because the best routes have no signal</div>
+      <p>في قلب الصحراء تنقطع التغطية، لكن رحلتك يجب أن تستمر. أثر يجمع الخريطة والتواصل والاتجاه والأمان — كلها تعمل دون اتصال — لتبقى واثقاً من طريقك، وقريباً من رفاقك.</p>
+      <div class="p-en">Deep in the desert the coverage fades, but your trip goes on. Athar brings maps, comms, direction, and safety together — all offline — so you stay sure of your way and close to your group.</div>
+      <div class="stats">
+        <div class="stat"><b>0</b><span>شبكة مطلوبة للتنقّل</span><span class="en">signal to navigate</span></div>
+        <div class="stat"><b>z17</b><span>دقة الخرائط الجاهزة</span><span class="en">map detail</span></div>
+        <div class="stat"><b>2</b><span>منصّتان</span><span class="en">iOS &amp; Android</span></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- FINAL -->
+  <section class="final" id="download">
+    <svg class="contours" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.2">
+        <path d="M-50 280 C 240 210 430 320 640 270 S 1020 180 1260 240"/>
+        <path d="M-50 320 C 240 250 430 360 640 310 S 1020 220 1260 280"/>
+        <path d="M-50 240 C 260 180 420 270 660 230 S 1040 150 1260 200"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <svg class="mark needle" viewBox="0 0 100 100" width="56" height="56" aria-hidden="true" style="margin-bottom:24px">
+        <circle cx="50" cy="50" r="34" fill="none" stroke="#FBF6EA" stroke-width="3" opacity="0.5"/>
+        <path d="M50 24 l8 26 -8 26 -8 -26 z" fill="var(--sand)"/>
+        <circle cx="50" cy="50" r="4" fill="#FBF6EA"/>
+      </svg>
+      <h2>ابدأ رحلتك مع أثر</h2>
+      <div class="h2-en">Start your journey with Athar</div>
+      <p>حمّل التطبيق الآن، ونزّل خريطة منطقتك قبل أن تنطلق. البرّ ينتظرك.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#"> App Store <small>iOS</small></a>
+        <a class="btn btn-ghost" href="#">Android <small>APK</small></a>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">
+    <div class="site">uae-athr.com</div>
+    <div class="meta">أثر · ATHAR — NAVIGATE THE WILD · © 2026</div>
+  </div></footer>
+</div>
+
+<script>
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  (function(){
+    const c=document.getElementById('mapc'); if(!c) return; const x=c.getContext('2d'); const W=c.width,H=c.height;
+    const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#b9964f'); g.addColorStop(.5,'#a5813f'); g.addColorStop(1,'#8f6d34');
+    x.fillStyle=g; x.fillRect(0,0,W,H);
+    x.globalAlpha=.18; for(let i=-H;i<W+H;i+=14){x.strokeStyle=i%28?'#6f5626':'#d8b366'; x.lineWidth=6; x.beginPath(); x.moveTo(i,0); x.lineTo(i-H,H); x.stroke();}
+    x.globalAlpha=.10; for(let i=0;i<180;i++){x.fillStyle=Math.random()>.5?'#5f4a20':'#e5c583'; x.fillRect(Math.random()*W,Math.random()*H,2,2);}
+    x.globalAlpha=1; x.strokeStyle='rgba(60,48,22,.55)'; x.lineWidth=10; x.lineCap='round';
+    x.beginPath(); x.moveTo(-10,120); x.bezierCurveTo(80,180,120,260,60,340); x.bezierCurveTo(20,400,120,470,240,500); x.stroke();
+    x.setLineDash([8,7]); x.strokeStyle='#5E6AD2'; x.lineWidth=3; x.beginPath(); x.moveTo(130,470); x.bezierCurveTo(150,360,110,270,180,190); x.lineTo(210,120); x.stroke(); x.setLineDash([]);
+    x.fillStyle='#E5484D'; x.beginPath(); x.arc(210,116,7,0,7); x.fill();
+    x.fillStyle='#fff'; x.beginPath(); x.arc(130,472,7,0,7); x.fill(); x.fillStyle='#5E6AD2'; x.beginPath(); x.arc(130,472,4.5,0,7); x.fill();
+    x.fillStyle='#12A594'; [[90,300],[160,340]].forEach(p=>{x.beginPath(); x.arc(p[0],p[1],5,0,7); x.fill();});
+  })();
+</script>
+
+</body>
+</html>
