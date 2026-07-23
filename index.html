@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أثر — الرفيق الذكي في البر</title>
+<meta name="description" content="تطبيق أثر للملاحة البرية — خرائط أوفلاين عالية الدقة، توجيه ذكي، تتبع، طوارئ، ومساعد DeepSeek. مجاني ومتاح على iOS و Android.">
+<meta name="keywords" content="أثر, athar, ملاحة برية, خرائط أوفلاين, توجيه, بر, صحراء, UAE, السعودية, سراييفو">
+<meta property="og:title" content="أثر — الرفيق الذكي في البر">
+<meta property="og:description" content="خرائط أوفلاين، توجيه، تتبع، طوارئ — كل شي تحتاجه في البر.">
+<meta property="og:type" content="website">
+<style>
+:root {
+  --bg: #08090A;
+  --surface: #191A1B;
+  --accent: #5E6AD2;
+  --text: #F0F0F0;
+  --text2: #9DA0A8;
+  --danger: #E53935;
+  --border: #2A2B2D;
+}
+* { margin:0; padding:0; box-sizing:border-box }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.7; direction: rtl;
+  overflow-x: hidden;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  text-align: center; padding: 80px 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(94,106,210,0.15) 0%, transparent 60%);
+}
+.hero h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+.hero h1 span { color: var(--accent); }
+.hero p { font-size: 20px; color: var(--text2); max-width: 560px; margin: 0 auto 40px; }
+.badges { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 24px; text-decoration: none;
+  color: var(--text); font-size: 16px; font-weight: 600;
+  transition: all 0.2s;
+}
+.badge:hover { border-color: var(--accent); background: rgba(94,106,210,0.1); }
+.badge img { width: 28px; height: 28px; }
+.features {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px; padding: 100px 0;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px 24px; text-align: center;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card .icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 18px; margin-bottom: 8px; }
+.card p { color: var(--text2); font-size: 14px; }
+.screenshots {
+  padding: 80px 0; text-align: center;
+}
+.screenshots h2 { font-size: 32px; margin-bottom: 40px; }
+.shots { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.shots img {
+  border-radius: 24px; border: 1px solid var(--border);
+  width: 260px; height: auto;
+}
+.contact {
+  padding: 80px 0; text-align: center;
+  background: linear-gradient(180deg, transparent, rgba(94,106,210,0.05));
+}
+.contact h2 { font-size: 28px; margin-bottom: 12px; }
+.contact a { color: var(--accent); font-size: 20px; text-decoration: none; }
+.contact a:hover { text-decoration: underline; }
+.footer {
+  padding: 32px 0; text-align: center;
+  color: var(--text2); font-size: 13px;
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--accent); text-decoration: none; }
+@media (max-width: 600px) {
+  .hero h1 { font-size: 36px; }
+  .hero p { font-size: 16px; }
+  .badges { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="container">
+    <h1>أ<span>ث</span>ر</h1>
+    <p>الرفيق الذكي في البر. خرائط أوفلاين عالية الدقة، توجيه ذكي، تتبع، طوارئ، ومساعد DeepSeek AI.</p>
+    <div class="badges">
+      <a href="https://apps.apple.com/app/athar" class="badge">
+        <span>🍏</span> App Store
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.salem.athar" class="badge">
+        <span>▶️</span> Google Play
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container features">
+    <div class="card">
+      <div class="icon">🗺️</div>
+      <h3>خرائط أوفلاين</h3>
+      <p>دقة z17 عبر ESRI Satellite — تعمل بدون إنترنت. حمل خرائط سراييفو، الإمارات، السعودية والخليج.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧭</div>
+      <h3>توجيه ذكي</h3>
+      <p>توجيه عبر الطرق والمسارات مع حساب التضاريس. يشتغل حتى بدون API خارجي — منحني محلي.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🛟</div>
+      <h3>طوارئ</h3>
+      <p>أرقام طوارئ تلقائية حسب موقعك. SOS، كشاف، صافرة — كل شي جاهز.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>مساعد DeepSeek</h3>
+      <p>اسأل عن الطريق، الطقس، المسافة، أقرب محطة وقود — المساعد الذكي مع موقعك الحالي.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📡</div>
+      <h3>هوكي توكي</h3>
+      <p>تنسيق مع مجموعتك — دردشة، مواقع مشتركة، ورسائل صوتية. ابق على تواصل مع قروبك في البر.</p>
+    </div>
+    <div class="card">
+      <div class="icon">☀️</div>
+      <h3>أوقات الصلاة والشمس</h3>
+      <p>مواقيت الصلاة حسب موقعك. أوقات الشروق والغروب لتخطيط الرحلات.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <h2>📧 تواصل معنا</h2>
+    <p style="color:var(--text2);margin-bottom:16px">للاستفسارات، الدعم الفني، أو التعاون</p>
+    <a href="mailto:contact@uae-athr.com">contact@uae-athr.com</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Athar — جميع الحقوق محفوظة | <a href="https://uae-athr.com">uae-athr.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
