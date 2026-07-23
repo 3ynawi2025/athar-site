@@ -1,422 +1,802 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>أثر · Athar</title>
-<meta name="description" content="أثر — تطبيق الملاحة البرّية والبحرية وعشاق الرحلات والتواصل: خرائط تعمل بلا إنترنت، تخاطب صوتي، ومساعد ذكي يعمل عند توفر الانترنت.">
-<style>*{margin:0;padding:0;box-sizing:border-box}</style>
+<title>أثر · ATHR — دليلك في البرّ والبحر</title>
+<meta name="description" content="أثر — خرائط أقمار صناعية تعمل بلا إنترنت، تخاطب صوتي مع مجموعتك، وتسجيل مسارك خطوة بخطوة. للبرّ والبحر.">
+<meta name="theme-color" content="#0A1419">
+<meta property="og:title" content="أثر · ATHR">
+<meta property="og:description" content="دليلك في البرّ والبحر — بلا شبكة، بلا ضياع.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   أثر · ATHR — design tokens
+   ألوان مأخوذة من لغة التتبّع داخل التطبيق نفسه:
+   أخضر = تثبيت أقمار، كهرماني = حساب مسار داخلي، أزرق = عودة/شبكة
+   ============================================================ */
+:root{
+  --ink-900:#0A1419;
+  --ink-850:#0D1B22;
+  --ink-800:#10222B;
+  --ink-700:#183038;
+  --line:rgba(237,226,206,.14);
+  --line-soft:rgba(237,226,206,.07);
+
+  --sand-50:#F4EDDF;
+  --sand-100:#EDE2CE;
+  --sand-300:#C4B69C;
+  --sand-500:#8E8471;
+
+  --gnss:#3FCF8E;
+  --pdr:#F2A03D;
+  --back:#5FA8E8;
+  --sos:#E4533F;
+
+  --f-display:"Reem Kufi","Noto Kufi Arabic",Georgia,serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-cond:"IBM Plex Sans Condensed","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --pad:clamp(1.25rem,5vw,4.5rem);
+  --maxw:1280px;
+  --rail:2px;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ink-900);color:var(--sand-100);
+  font-family:var(--f-body);font-weight:400;font-size:clamp(1rem,.95rem + .2vw,1.075rem);
+  line-height:1.75;overflow-x:hidden;
+}
+html[lang="en"] body{font-family:var(--f-cond),var(--f-body)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.ltr{direction:ltr;unicode-bidi:isolate}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+
+.skip{position:absolute;inset-inline-start:-9999px;top:0;z-index:99;
+  background:var(--sand-100);color:var(--ink-900);padding:.6rem 1rem;font-weight:600}
+.skip:focus{inset-inline-start:1rem;top:1rem}
+:where(a,button,[tabindex]):focus-visible{outline:2px solid var(--gnss);outline-offset:3px;border-radius:2px}
+
+/* ---------- شريط علوي ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,20,25,.86);
+  background:color-mix(in srgb,var(--ink-900) 84%,transparent);
+  backdrop-filter:blur(14px) saturate(1.2);
+  border-block-end:1px solid var(--line-soft);
+}
+.nav__in{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);
+  max-width:var(--maxw);margin-inline:auto;padding:.7rem var(--pad)}
+.brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;flex:0 0 auto}
+.brand__ar{font-family:var(--f-display);font-weight:700;font-size:1.6rem;line-height:1;
+  color:var(--sand-50);letter-spacing:.02em}
+.brand__en{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.42em;color:var(--sand-500);
+  text-transform:uppercase}
+.nav__links{display:flex;gap:1.6rem;margin-inline-start:auto;list-style:none;margin-block:0;padding:0}
+.nav__links a{font-size:.9rem;text-decoration:none;color:var(--sand-300);padding-block:.35rem;
+  border-block-end:1px solid transparent;transition:color .18s,border-color .18s}
+.nav__links a:hover{color:var(--sand-50);border-block-end-color:var(--gnss)}
+.nav__side{display:flex;align-items:center;gap:.6rem;margin-inline-start:auto}
+.nav__links + .nav__side{margin-inline-start:0}
+.lang{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;background:none;cursor:pointer;
+  color:var(--sand-300);border:1px solid var(--line);border-radius:999px;padding:.42rem .8rem;
+  transition:.18s}
+.lang:hover{color:var(--sand-50);border-color:var(--sand-500)}
+
+/* ---------- أزرار ---------- */
+.btn{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;cursor:pointer;
+  font-family:var(--f-body);font-weight:600;font-size:.95rem;line-height:1;
+  padding:.95rem 1.5rem;border-radius:2px;border:1px solid transparent;transition:.2s}
+.btn--go{background:var(--gnss);color:#04140C;border-color:var(--gnss)}
+.btn--go:hover{background:#5BE0A5;transform:translateY(-2px)}
+.btn--ghost{border-color:var(--line);color:var(--sand-100)}
+.btn--ghost:hover{border-color:var(--sand-300);background:rgba(237,226,206,.05);transform:translateY(-2px)}
+.btn--sm{padding:.6rem 1rem;font-size:.85rem}
+.btn svg{flex:0 0 auto}
+
+/* ---------- الواجهة الرئيسية ---------- */
+.hero{position:relative;min-height:640px;min-height:min(100svh,860px);display:flex;align-items:flex-end;
+  padding-block:clamp(5rem,14vh,9rem) clamp(2.5rem,7vh,4.5rem);overflow:hidden;isolation:isolate}
+.hero__field{position:absolute;inset:0;z-index:-1;width:100%;height:100%}
+.hero__field svg{width:100%;height:100%}
+.hero__in{position:relative;width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.eyebrow{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gnss);display:flex;align-items:center;gap:.65rem;margin-block-end:1.4rem}
+.eyebrow::before{content:"";width:2.6rem;height:1px;background:var(--gnss);opacity:.6}
+h1{font-family:var(--f-display);font-weight:700;margin:0 0 1.2rem;
+  font-size:clamp(2.35rem,1.1rem + 5.4vw,5.1rem);line-height:1.14;letter-spacing:-.01em;
+  color:var(--sand-50);max-width:16ch;text-wrap:balance}
+h1 .lost{color:var(--pdr)}
+.hero__lede{max-width:52ch;color:var(--sand-300);font-size:clamp(1rem,.95rem + .35vw,1.2rem);margin:0 0 2.2rem}
+.hero__actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-block-end:2.6rem}
+
+.readout{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:2px;
+  background:rgba(13,27,34,.78);
+  background:color-mix(in srgb,var(--ink-850) 76%,transparent);backdrop-filter:blur(6px);
+  max-width:760px}
+.readout__cell{flex:1 1 128px;padding:.8rem 1.1rem;border-inline-end:1px solid var(--line-soft)}
+.readout__cell:last-child{border-inline-end:0}
+.readout__k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--sand-500);display:block;margin-block-end:.3rem}
+.readout__v{font-family:var(--f-mono);font-size:1.02rem;font-weight:500;color:var(--sand-50)}
+.readout__cell .u{font-size:.7rem;color:var(--sand-500);margin-inline-start:.25rem}
+.readout__v.ok{color:var(--gnss)}
+
+/* ---------- المسار ---------- */
+.trail{scroll-margin-block-start:5rem;padding-block:clamp(4.5rem,11vh,8rem)}
+.sec-head{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);margin-block-end:clamp(3rem,7vh,5rem)}
+.sec-head h2{font-family:var(--f-display);font-weight:600;margin:.5rem 0 1rem;
+  font-size:clamp(1.8rem,1.1rem + 2.6vw,3.1rem);line-height:1.22;color:var(--sand-50);max-width:20ch}
+.sec-head p{max-width:60ch;color:var(--sand-300);margin:0}
+.eyebrow--muted{color:var(--sand-500)}
+.eyebrow--muted::before{background:var(--sand-500)}
+
+.trail__body{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.trail__rail{padding-inline-start:clamp(1.5rem,4vw,3.25rem);position:relative}
+
+.wp{--sig:var(--gnss);
+  position:relative;border-inline-start:var(--rail) solid var(--sig);
+  padding-inline-start:clamp(1.5rem,4vw,3.25rem);padding-block:0 clamp(3rem,7vh,5.5rem)}
+.wp[data-signal="net"]{--sig:var(--back);border-inline-start-style:dashed}
+.wp:last-of-type{border-inline-start-color:transparent;padding-block-end:0}
+.wp::before{content:"";position:absolute;inset-inline-start:calc(var(--rail) / -2 - 7px);top:.35rem;
+  width:14px;height:14px;border-radius:50%;background:var(--ink-900);
+  border:var(--rail) solid var(--sig);z-index:2}
+.wp::after{content:"";position:absolute;inset-inline-start:calc(var(--rail) / -2 - 15px);top:-.15rem;
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--sig);opacity:0;z-index:1}
+.wp.seen::after{animation:ping 1.5s ease-out 1}
+@keyframes ping{0%{opacity:.85;transform:scale(.5)}100%{opacity:0;transform:scale(1.15)}}
+
+.wp__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:clamp(1.75rem,4vw,3.5rem);align-items:center}
+.wp:nth-of-type(even) .wp__art{order:-1}
+.wp__meta{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin-block-end:.9rem}
+.wp__id{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.2em;color:var(--sand-500)}
+.chip{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.28rem .6rem;border-radius:999px;border:1px solid;display:inline-flex;align-items:center;gap:.4rem}
+.chip--off{color:var(--gnss);border-color:rgba(63,207,142,.45);background:rgba(63,207,142,.09);
+  border-color:color-mix(in srgb,var(--gnss) 45%,transparent);
+  background:color-mix(in srgb,var(--gnss) 9%,transparent)}
+.chip--net{color:var(--back);border-color:rgba(95,168,232,.45);background:rgba(95,168,232,.09);
+  border-color:color-mix(in srgb,var(--back) 45%,transparent);
+  background:color-mix(in srgb,var(--back) 9%,transparent)}
+.chip .dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.wp h3{font-family:var(--f-display);font-weight:600;margin:0 0 .7rem;
+  font-size:clamp(1.35rem,1.05rem + 1.1vw,2rem);line-height:1.3;color:var(--sand-50)}
+.wp p{margin:0 0 1.3rem;color:var(--sand-300);max-width:46ch}
+.wp ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.wp li{position:relative;padding-inline-start:1.4rem;font-size:.93rem;color:var(--sand-100)}
+.wp li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:.55rem;height:1px;background:var(--sig)}
+.wp__art{border:1px solid var(--line);border-radius:3px;background:
+  linear-gradient(160deg,var(--ink-800),var(--ink-850) 60%,var(--ink-900));
+  padding:clamp(1rem,2.5vw,1.75rem);overflow:hidden}
+.wp__art svg{width:100%;height:auto}
+
+/* ---------- لماذا أثر ---------- */
+.why{scroll-margin-block-start:5rem;border-block:1px solid var(--line-soft);background:
+  radial-gradient(120% 100% at 50% 0%,rgba(95,168,232,.07),transparent 60%),var(--ink-850);
+  padding-block:clamp(4rem,10vh,7rem)}
+.why__grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(2rem,5vw,4.5rem);align-items:center;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.why h2{font-family:var(--f-display);font-weight:600;margin:.5rem 0 1.1rem;
+  font-size:clamp(1.75rem,1.05rem + 2.5vw,2.9rem);line-height:1.24;color:var(--sand-50)}
+.why p{color:var(--sand-300);margin:0;max-width:52ch}
+.status{border:1px solid var(--line);border-radius:3px;background:var(--ink-900);overflow:hidden}
+.status__hd{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.7rem 1.1rem;border-block-end:1px solid var(--line-soft);
+  font-family:var(--f-mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand-500)}
+.status__hd .live{color:var(--gnss);display:inline-flex;align-items:center;gap:.4rem}
+.status__hd .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gnss);
+  animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.status__row{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.85rem 1.1rem;border-block-end:1px solid var(--line-soft)}
+.status__row:last-child{border-block-end:0}
+.status__row dt{color:var(--sand-300);font-size:.9rem;margin:0}
+.status__row dd{margin:0;font-family:var(--f-mono);font-weight:500;color:var(--sand-50);font-size:.95rem}
+.status__row dd.ok{color:var(--gnss)}
+dl.status__list{margin:0}
+
+/* ---------- التحميل ---------- */
+.get{scroll-margin-block-start:5rem;position:relative;padding-block:clamp(4.5rem,12vh,8rem);overflow:hidden;text-align:center}
+.get__lines{position:absolute;inset:0;z-index:-1;opacity:.5}
+.get__lines svg{width:100%;height:100%}
+.get h2{font-family:var(--f-display);font-weight:700;margin:.6rem 0 1rem;
+  font-size:clamp(2rem,1.1rem + 3.4vw,3.6rem);line-height:1.16;color:var(--sand-50)}
+.get p{color:var(--sand-300);max-width:46ch;margin:0 auto 2.2rem}
+.get .eyebrow{justify-content:center}
+.get__actions{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.get__note{margin-block-start:1.6rem;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;
+  color:var(--sand-500);text-transform:uppercase}
+
+/* ---------- التذييل ---------- */
+.foot{border-block-start:1px solid var(--line-soft);padding-block:2.2rem}
+.foot__in{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sand-500)}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--sand-100)}
+
+/* ---------- حركة ---------- */
+.rise{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+.rise.seen{opacity:1;transform:none}
+.draw{stroke-dasharray:var(--len,1200);stroke-dashoffset:var(--len,1200);
+  animation:draw 3.4s cubic-bezier(.32,.62,.28,1) .25s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.pulse{transform-origin:center;transform-box:fill-box;animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(3.4);opacity:0}}
+.crawl{animation:crawl 2.2s linear infinite}
+@keyframes crawl{to{stroke-dashoffset:-24}}
+
+/* ---------- استجابة ---------- */
+@media (max-width:940px){
+  .wp__grid{grid-template-columns:1fr}
+  .wp:nth-of-type(even) .wp__art{order:0}
+  .why__grid{grid-template-columns:1fr}
+  .nav__links{display:none}
+  .nav__links + .nav__side{margin-inline-start:auto}
+}
+@media (max-width:560px){
+  .readout__cell{flex:1 1 50%;border-block-end:1px solid var(--line-soft)}
+  .hero__actions .btn{flex:1 1 100%;justify-content:center}
+  .brand__en{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+  .rise{opacity:1;transform:none}
+  .draw{stroke-dashoffset:0}
+}
+</style>
 </head>
 <body>
-<style>
-  :root{
-    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
-    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
-    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
-    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
-    --accent:var(--green);
-    --maxw:1120px;
-    /* Arabic calligraphic display (Naskh/Majalla) → graceful fallbacks */
-    --display-ar:"Sakkal Majalla","Aref Ruqaa","Traditional Arabic","Arabic Typesetting","Noto Naskh Arabic","Amiri",serif;
-    --body-ar:"Segoe UI","Sakkal Majalla","Geeza Pro","SF Arabic",Tahoma,sans-serif;
-    --display-en:"Iowan Old Style","Palatino Linotype","Palatino",Georgia,serif;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
-      --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
-      --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
-      --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
-    }
-  }
-  :root[data-theme="light"]{
-    --ground:#FBF6EA; --ground-2:#F3EAD6; --panel:#FFFDF7;
-    --ink:#1B1A12; --ink-soft:#6A6350; --hair:#E4D9BF;
-    --green:#17512F; --green-deep:#0F3A21; --green-ink:#123E24;
-    --sand:#C0851F; --sand-soft:#E7C983; --sky:#EDE7D4;
-  }
-  :root[data-theme="dark"]{
-    --ground:#0D1611; --ground-2:#111E17; --panel:#132019;
-    --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B;
-    --green:#4BA46B; --green-deep:#2C7247; --green-ink:#D7EAD9;
-    --sand:#E1AC4E; --sand-soft:#8A6C2E; --sky:#0B120E;
-  }
+<a class="skip" href="#main" data-ar="تخطّي إلى المحتوى" data-en="Skip to content">تخطّي إلى المحتوى</a>
 
-  *{box-sizing:border-box;}
-  body{margin:0;}
-  .athar{direction:rtl; text-align:right; background:var(--ground); color:var(--ink);
-    font-family:var(--body-ar); line-height:1.75; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:24px;}
+<header class="nav">
+  <div class="nav__in">
+    <a class="brand" href="#top">
+      <span class="brand__ar">أثر</span>
+      <span class="brand__en">ATHR</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#trail" data-ar="ما يقدّمه" data-en="What it does">ما يقدّمه</a></li>
+      <li><a href="#why" data-ar="لماذا أثر" data-en="Why Athr">لماذا أثر</a></li>
+      <li><a href="#get" data-ar="التحميل" data-en="Download">التحميل</a></li>
+    </ul>
+    <div class="nav__side">
+      <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+      <a class="btn btn--go btn--sm" href="#get" data-ar="حمّل التطبيق" data-en="Get the app">حمّل التطبيق</a>
+    </div>
+  </div>
+</header>
 
-  h1,h2,h3{font-family:var(--display-ar); font-weight:700; line-height:1.28; text-wrap:balance; margin:0;}
-  p{margin:0;}
-  /* English secondary layer — quieter, latin serif, LTR */
-  .en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;}
-  .en-body{font-family:var(--display-en); direction:ltr; text-align:right; color:var(--ink-soft); font-style:italic;}
-  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
-  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase;
-    color:var(--sand); direction:ltr; text-align:right; display:inline-block;}
+<main id="main">
 
-  /* ---------- HERO ---------- */
-  .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--hair);}
-  .hero-sky{position:absolute; inset:0; z-index:0;
-    background:radial-gradient(120% 90% at 78% -10%, color-mix(in oklab, var(--sand-soft) 55%, transparent), transparent 60%),
-      linear-gradient(180deg, var(--sky), var(--ground));}
-  .contours{position:absolute; inset:0; z-index:0; opacity:.5; color:var(--green);}
-  :root[data-theme="dark"] .contours{opacity:.28;}
-  :root[data-theme="light"] .contours{opacity:.5;}
-  @media (prefers-color-scheme: dark){ .contours{opacity:.28;} }
-  .dunes{position:absolute; left:0; right:0; bottom:-1px; z-index:0;}
-  .hero .wrap{position:relative; z-index:2; padding-top:84px; padding-bottom:196px;}
+<!-- ============ الواجهة ============ -->
+<section class="hero" id="top">
+  <div class="hero__field" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" role="presentation">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080F13"/>
+          <stop offset="55%" stop-color="#0B1A21"/>
+          <stop offset="100%" stop-color="#12262F"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#5FA8E8" stop-opacity=".16"/>
+          <stop offset="100%" stop-color="#5FA8E8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="d1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#16303A"/><stop offset="100%" stop-color="#0E1F27"/>
+        </linearGradient>
+        <linearGradient id="d2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#112730"/><stop offset="100%" stop-color="#0A171D"/>
+        </linearGradient>
+        <linearGradient id="d3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0C1C23"/><stop offset="100%" stop-color="#070F13"/>
+        </linearGradient>
+        <pattern id="tiles" width="96" height="96" patternUnits="userSpaceOnUse">
+          <path d="M96 0H0v96" fill="none" stroke="#EDE2CE" stroke-opacity=".045" stroke-width="1"/>
+        </pattern>
+        <linearGradient id="fadeMask" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fff" stop-opacity=".55"/>
+          <stop offset="70%" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="tileMask"><rect width="1440" height="900" fill="url(#fadeMask)"/></mask>
+      </defs>
 
-  .brandrow{display:flex; align-items:center; gap:14px; margin-bottom:40px;}
-  .mark{width:46px; height:46px; flex:none;}
-  .brandname{font-family:var(--display-ar); font-weight:700; font-size:26px;}
-  .brandlatin{font-family:var(--mono); font-size:11px; letter-spacing:.38em; color:var(--ink-soft); direction:ltr;}
+      <rect width="1440" height="900" fill="url(#sky)"/>
+      <rect width="1440" height="900" fill="url(#tiles)" mask="url(#tileMask)"/>
+      <circle cx="1090" cy="150" r="380" fill="url(#glow)"/>
 
-  .hero h1{font-size:clamp(46px,8vw,86px); letter-spacing:0;}
-  .hero h1 .amber{color:var(--sand);}
-  .hero .h1-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600;
-    font-size:clamp(20px,3vw,30px); color:var(--ink); margin-top:14px; font-style:italic;}
-  .lede{margin-top:22px; max-width:58ch; font-size:clamp(17px,2.1vw,21px); color:var(--ink-soft);}
-  .lede-en{margin-top:8px; max-width:64ch; direction:ltr; text-align:right; font-family:var(--display-en);
-    font-style:italic; font-size:clamp(15px,1.9vw,18px); color:var(--ink-soft);}
-
-  .cta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px;}
-  .btn{display:inline-flex; align-items:center; gap:10px; font-family:var(--display-ar); font-weight:700; font-size:18px;
-    padding:13px 24px; border-radius:14px; text-decoration:none; cursor:pointer; border:1px solid transparent;
-    transition:transform .15s ease, box-shadow .15s ease;}
-  .btn:hover{transform:translateY(-2px);}
-  .btn-primary{background:var(--green); color:#FBF6EA; box-shadow:0 10px 26px -12px color-mix(in oklab, var(--green) 80%, black);}
-  :root[data-theme="dark"] .btn-primary{color:#08120C;}
-  @media (prefers-color-scheme: dark){ .btn-primary{color:#08120C;} }
-  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--hair);}
-  .btn small{font-family:var(--mono); font-weight:400; font-size:11px; opacity:.85; letter-spacing:.05em;}
-
-  .coords{position:absolute; z-index:2; bottom:156px; inset-inline-start:24px; font-family:var(--mono);
-    font-size:11px; letter-spacing:.12em; color:var(--ink-soft); direction:ltr; display:flex; gap:18px; opacity:.85;}
-
-  /* ---------- STRIP ---------- */
-  .strip{background:var(--green-deep); color:#EFE7D0;}
-  :root[data-theme="dark"] .strip{background:#0A150F;}
-  @media (prefers-color-scheme: dark){ .strip{background:#0A150F;} }
-  .strip .wrap{display:flex; flex-wrap:wrap; gap:12px 30px; padding-block:20px; align-items:center;}
-  .strip span{display:inline-flex; align-items:center; gap:9px; font-size:15px; font-family:var(--display-ar); font-weight:700;}
-  .strip .en{font-family:var(--display-en); font-size:12px; opacity:.7; font-weight:600; margin-inline-start:6px;}
-  .strip .dot{width:6px; height:6px; border-radius:50%; background:var(--sand); display:inline-block;}
-
-  /* ---------- SECTIONS ---------- */
-  section{padding-block:92px;}
-  .sec-head{max-width:62ch; margin-bottom:52px;}
-  .sec-head h2{font-size:clamp(30px,4.4vw,46px); margin-top:12px;}
-  .sec-head .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic;
-    font-size:clamp(17px,2.2vw,22px); color:var(--ink-soft); margin-top:8px; font-weight:600;}
-  .sec-head p{margin-top:18px; color:var(--ink-soft); font-size:18px;}
-  .sec-head .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; margin-top:6px; font-size:15px;}
-
-  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
-  @media (max-width:760px){ .grid{grid-template-columns:1fr;} }
-  .card{position:relative; background:var(--panel); border:1px solid var(--hair); border-radius:18px; padding:30px 28px; overflow:hidden;}
-  .card::before{content:""; position:absolute; inset-inline-start:0; top:22px; bottom:22px; width:3px; background:var(--sand); border-radius:3px; opacity:.9;}
-  .card .ic{width:38px; height:38px; margin-bottom:16px; color:var(--green);}
-  .card h3{font-size:24px;}
-  .card .h3-en{font-family:var(--display-en); direction:ltr; text-align:right; font-weight:600; font-size:15px; color:var(--sand); margin-top:2px;}
-  .card p{margin-top:12px; color:var(--ink-soft); font-size:16px;}
-  .card .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:13.5px; margin-top:5px; color:var(--ink-soft); opacity:.9;}
-  .card ul{margin:16px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;}
-  .card li{position:relative; padding-inline-start:22px; font-size:15px; color:var(--ink);}
-  .card li::before{content:""; position:absolute; inset-inline-start:2px; top:.62em; width:8px; height:8px; border:1.5px solid var(--green); border-radius:50%;}
-  .card .num{position:absolute; top:20px; inset-inline-end:24px; font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--sand-soft);}
-
-  /* ---------- SHOWCASE ---------- */
-  .showcase{background:var(--ground-2); border-block:1px solid var(--hair);}
-  .showcase .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
-  @media (max-width:860px){ .showcase .wrap{grid-template-columns:1fr; gap:36px;} }
-  .phone{position:relative; width:270px; aspect-ratio:9/19.5; margin-inline:auto; border-radius:38px; background:#0C1712; border:2px solid var(--hair); box-shadow:0 30px 60px -30px rgba(0,0,0,.5); overflow:hidden;}
-  .screen{position:absolute; inset:9px; border-radius:30px; overflow:hidden; background:#0f1a14;}
-  .map-canvas{position:absolute; inset:0;}
-  .hud{position:absolute; inset:0; padding:14px;}
-  .hud-top{position:absolute; top:14px; left:50%; transform:translateX(-50%); background:rgba(8,12,10,.72); color:#EDE7D0; font-family:var(--mono); font-size:9px; letter-spacing:.05em; padding:6px 10px; border-radius:8px; direction:ltr; white-space:nowrap;}
-  .hud-dial{position:absolute; top:52px; inset-inline-end:14px; width:44px; height:44px; border-radius:50%; background:rgba(8,12,10,.72); border:2px solid var(--sand); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .hud-dial b{font-size:16px; line-height:1;}
-  .hud-dial i{font-style:normal; font-size:7px; color:#cbb; letter-spacing:.08em;}
-  .ptt{position:absolute; bottom:16px; left:50%; transform:translateX(-50%); width:64px; height:64px; border-radius:50%; background:var(--green); border:3px solid #fff; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 8px 20px -6px rgba(0,0,0,.6);}
-  .menu-pill{position:absolute; inset-inline-start:14px; top:52%; transform:translateY(-50%); background:rgba(15,26,20,.9); border:1px solid var(--sand); color:#EDE7D0; font-family:var(--display-ar); font-weight:700; font-size:12px; padding:10px 8px; border-radius:12px; text-align:center; width:52px;}
-
-  .why h2{font-size:clamp(28px,4vw,40px);}
-  .why .h2-en{font-family:var(--display-en); direction:ltr; text-align:right; font-style:italic; font-weight:600; font-size:clamp(16px,2.2vw,20px); color:var(--ink-soft); margin-top:8px;}
-  .why p{margin-top:18px; color:var(--ink-soft); font-size:17px; max-width:46ch;}
-  .why .p-en{font-family:var(--display-en); font-style:italic; direction:ltr; text-align:right; font-size:15px; margin-top:8px; max-width:52ch;}
-  .why .stats{display:flex; flex-wrap:wrap; gap:14px; margin-top:30px;}
-  .stat{flex:1 1 130px; background:var(--panel); border:1px solid var(--hair); border-radius:14px; padding:16px 18px;}
-  .stat b{display:block; font-family:var(--display-ar); font-weight:700; font-size:30px; color:var(--green);}
-  .stat span{font-size:13px; color:var(--ink-soft);}
-  .stat .en{font-family:var(--display-en); font-size:11px; color:var(--ink-soft); opacity:.75; font-weight:600;}
-
-  /* ---------- FINAL ---------- */
-  .final{position:relative; overflow:hidden; background:var(--green); color:#F6EFDD; text-align:center;}
-  :root[data-theme="dark"] .final{background:var(--green-deep);}
-  @media (prefers-color-scheme: dark){ .final{background:var(--green-deep);} }
-  .final .contours{color:#F6EFDD; opacity:.14;}
-  .final .wrap{position:relative; z-index:2; padding-block:96px; display:flex; flex-direction:column; align-items:center;}
-  .final h2{font-size:clamp(34px,5.4vw,60px); color:#FBF6EA;}
-  .final .h2-en{font-family:var(--display-en); font-style:italic; font-weight:600; font-size:clamp(18px,2.4vw,24px); color:color-mix(in oklab,#FBF6EA 82%, transparent); margin-top:8px; direction:ltr;}
-  .final p{margin-top:16px; color:color-mix(in oklab,#FBF6EA 80%, transparent); font-size:19px; max-width:52ch;}
-  .final .cta-row{justify-content:center;}
-  .final .btn-primary{background:#FBF6EA; color:var(--green-deep);}
-  .final .btn-ghost{color:#FBF6EA; border-color:color-mix(in oklab,#FBF6EA 40%, transparent);}
-
-  footer{background:var(--ground); border-top:1px solid var(--hair);}
-  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; padding-block:34px; align-items:center;}
-  footer .site{font-family:var(--mono); font-size:13px; letter-spacing:.1em; color:var(--ink); direction:ltr;}
-  footer .meta{font-family:var(--mono); font-size:11px; color:var(--ink-soft); direction:ltr; letter-spacing:.08em;}
-
-  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  .needle{transform-origin:50% 50%; animation:drift 9s ease-in-out infinite;}
-  @keyframes drift{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
-  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} .needle{animation:none !important;} }
-</style>
-
-<div class="athar">
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-sky"></div>
-    <svg class="contours" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.55">
-        <path d="M-50 480 C 240 400 430 520 640 470 S 1020 360 1260 430"/>
-        <path d="M-50 520 C 240 440 430 560 640 510 S 1020 400 1260 470"/>
-        <path d="M-50 560 C 240 480 430 600 640 550 S 1020 440 1260 510"/>
-        <path d="M-50 420 C 260 350 420 450 660 410 S 1040 320 1260 380"/>
-        <path d="M-50 360 C 280 300 440 390 680 360 S 1060 280 1260 330"/>
+      <!-- نجوم -->
+      <g fill="#EDE2CE">
+        <circle cx="180" cy="120" r="1.4" opacity=".5"/><circle cx="330" cy="220" r="1" opacity=".32"/>
+        <circle cx="520" cy="90" r="1.2" opacity=".42"/><circle cx="700" cy="180" r="1" opacity=".28"/>
+        <circle cx="880" cy="70" r="1.5" opacity=".5"/><circle cx="1010" cy="240" r="1" opacity=".3"/>
+        <circle cx="1230" cy="130" r="1.2" opacity=".4"/><circle cx="1370" cy="260" r="1" opacity=".28"/>
+        <circle cx="120" cy="300" r="1" opacity=".26"/><circle cx="620" cy="330" r="1" opacity=".22"/>
       </g>
+      <!-- سُهيل -->
+      <g>
+        <circle cx="1128" cy="196" r="3" fill="#EDE2CE"/>
+        <circle cx="1128" cy="196" r="9" fill="none" stroke="#EDE2CE" stroke-opacity=".22"/>
+        <text x="1148" y="200" fill="#8E8471" font-family="IBM Plex Mono,monospace" font-size="13" letter-spacing="2">SUHAIL</text>
+      </g>
+
+      <!-- كثبان -->
+      <path d="M0 612C170 560 300 596 452 566 604 536 690 470 838 484c148 14 236 84 372 74 84-6 156-32 230-58v400H0z" fill="url(#d1)"/>
+      <path d="M0 706C130 664 268 700 404 676c136-24 220-84 366-72 146 12 244 76 392 60 100-11 178-38 278-70v306H0z" fill="url(#d2)"/>
+      <path d="M0 806C158 764 262 800 420 790c158-10 268-62 428-46 160 16 260 66 400 48 74-9 138-26 192-44v152H0z" fill="url(#d3)"/>
+
+      <!-- خطوط كنتور -->
+      <g fill="none" stroke="#EDE2CE" stroke-opacity=".085" stroke-width="1">
+        <path d="M40 664C190 626 300 656 452 630 604 604 690 552 838 564c148 12 236 72 372 64 84-5 156-26 230-48"/>
+        <path d="M60 700C210 664 320 690 470 666 620 642 706 594 852 606c146 12 232 68 366 60 82-5 152-24 224-44"/>
+        <path d="M84 738C232 704 342 728 490 706 638 684 722 640 866 652c144 12 228 64 360 56 80-5 148-22 218-40"/>
+      </g>
+
+      <!-- المسار -->
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path id="trackA" class="draw" style="--len:980"
+              d="M96 838C210 812 268 760 348 736c96-29 168 6 250-22 96-33 128-104 224-124"
+              stroke="#3FCF8E" stroke-width="3.2"/>
+        <path class="crawl" d="M822 590c92-19 152-66 238-84 74-16 130 2 190-12"
+              stroke="#F2A03D" stroke-width="3" stroke-dasharray="9 9" opacity=".9"/>
+      </g>
+      <g stroke="#3FCF8E" fill="#0A1419" stroke-width="2.4">
+        <rect x="342" y="730" width="11" height="11" transform="rotate(45 347.5 735.5)"/>
+        <rect x="592" y="708" width="11" height="11" transform="rotate(45 597.5 713.5)"/>
+      </g>
+      <text x="120" y="812" fill="#3FCF8E" font-family="IBM Plex Mono,monospace" font-size="13" letter-spacing="2.5" opacity=".85">GNSS</text>
+      <text x="838" y="566" fill="#F2A03D" font-family="IBM Plex Mono,monospace" font-size="13" letter-spacing="2.5" opacity=".85">PDR · بلا شبكة</text>
+
+      <circle cx="1250" cy="494" r="6" fill="#F2A03D"/>
+      <circle class="pulse" cx="1250" cy="494" r="6" fill="none" stroke="#F2A03D" stroke-width="1.6"/>
     </svg>
-    <div class="wrap">
-      <div class="brandrow">
-        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M18 66 C 30 40 40 40 48 66 L 40 66 C 36 54 32 54 28 66 Z" fill="var(--green)"/>
-          <rect x="58" y="30" width="12" height="36" rx="2" fill="var(--green)"/>
-          <path d="M60 20 l7 7 -7 7 -7 -7 z" fill="var(--green)"/>
-          <circle cx="78" cy="72" r="12" fill="none" stroke="var(--green)" stroke-width="4"/>
-          <path d="M78 64 l3 8 -3 8 -3 -8 z" fill="var(--sand)"/>
-          <path d="M14 78 q30 -10 72 0" fill="none" stroke="var(--sand)" stroke-width="4" stroke-linecap="round"/>
-        </svg>
-        <div>
-          <div class="brandname">أثر</div>
-          <div class="brandlatin">A T H R</div>
-        </div>
+  </div>
+
+  <div class="hero__in">
+    <p class="eyebrow" data-ar="ملاحة برّية وبحرية" data-en="Land &amp; sea navigation">ملاحة برّية وبحرية</p>
+    <h1 data-ar="دليلك في البرّ والبحر — بلا شبكة، <span class=&quot;lost&quot;>بلا ضياع</span>." data-en="Your guide off the grid — no signal, <span class=&quot;lost&quot;>no getting lost</span>.">دليلك في البرّ والبحر — بلا شبكة، <span class="lost">بلا ضياع</span>.</h1>
+    <p class="hero__lede" data-ar="نزّل خريطة منطقتك قبل أن تنطلق. أثر يتتبّع مسارك بالأقمار الصناعية ويحفظه حتى بعد انقطاع الإشارة، ويعيدك إلى نقطة البداية خطوة بخطوة." data-en="Download your area before you leave. Athr tracks your route by satellite and keeps recording after the signal drops — then walks you back to where you started.">نزّل خريطة منطقتك قبل أن تنطلق. أثر يتتبّع مسارك بالأقمار الصناعية ويحفظه حتى بعد انقطاع الإشارة، ويعيدك إلى نقطة البداية خطوة بخطوة.</p>
+
+    <div class="hero__actions">
+      <!-- ضع هنا رابط App Store الحقيقي -->
+      <a class="btn btn--go" href="#get">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.3 12.9c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.6.9-.8 0-1.9-.9-3.1-.8-1.6 0-3 .9-3.8 2.3-1.7 2.9-.4 7.1 1.2 9.4.8 1.1 1.7 2.4 3 2.4 1.2 0 1.6-.8 3.1-.8 1.4 0 1.8.8 3.1.7 1.3 0 2.1-1.1 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.5-1-2.6-3.6zM14 5.6c.7-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3z"/></svg>
+        <span data-ar="حمّل لـ iPhone" data-en="Download for iPhone">حمّل لـ iPhone</span>
+      </a>
+      <!-- ضع هنا رابط Google Play أو ملف APK -->
+      <a class="btn btn--ghost" href="#get">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 2.6 14.5 12 4.2 21.4c-.4-.3-.7-.8-.7-1.4V4c0-.6.3-1.1.7-1.4zm11.9 6.8L6.4 3.7l8.1 7.4 1.6-1.7zm2.8 1.6c.7.4 1.1.9 1.1 1.5s-.4 1.1-1.1 1.5l-1.9 1.1-2-2.6 2-2.6 1.9 1.1zM6.4 20.3l9.7-5.7-1.6-1.7-8.1 7.4z"/></svg>
+        <span data-ar="حمّل لـ Android" data-en="Download for Android">حمّل لـ Android</span>
+      </a>
+    </div>
+
+    <div class="readout" role="group" aria-label="حالة الجهاز">
+      <div class="readout__cell">
+        <span class="readout__k">Position</span>
+        <span class="readout__v mono ltr">24°28′N 54°22′E</span>
       </div>
-
-      <span class="eyebrow">رفيق عشاق الرحلات في البرّ والبحر · Off-road companion</span>
-      <h1>دليلك في البرّ والبحر —<br><span class="amber">بلا شبكة، بلا ضياع.</span></h1>
-      <div class="h1-en">Your guide off the grid — no signal, no getting lost.</div>
-      <p class="lede">ما يميّز أثر عن غيره: مدمج بأدوات الذكاء الاصطناعي لمساعدتك في كل خطوة، وتخاطب صوتي فوري (واكي توكي) مدمج في التطبيق للتواصل مع مجموعتك أينما كنتم، وتتبّع دقيق لرحلتك عبر الأقمار الصناعية حتى عند انقطاع الإنترنت — يسجّل مسارك وتحفظه وترسله لمجموعتك وأصدقائك.</p>
-      <p class="lede-en">What sets Athar apart: AI-powered copilot guiding every step, seamless built-in walkie-talkie for instant group communication anywhere, and satellite-based GPS tracking that records, saves, and shares your trip — even without internet.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#download"> App Store <small>iOS</small></a>
-        <a class="btn btn-ghost" href="#download">Android <small>APK</small></a>
+      <div class="readout__cell">
+        <span class="readout__k">Heading</span>
+        <span class="readout__v mono ltr" data-count="312" data-suffix="°">0°</span>
+      </div>
+      <div class="readout__cell">
+        <span class="readout__k">Speed</span>
+        <span class="readout__v mono ltr" data-count="48">0</span><span class="u mono" data-ar="كم/س" data-en="km/h">كم/س</span>
+      </div>
+      <div class="readout__cell">
+        <span class="readout__k">Elevation</span>
+        <span class="readout__v mono ltr" data-count="12" data-suffix=" m">0 m</span>
+      </div>
+      <div class="readout__cell">
+        <span class="readout__k">Signal</span>
+        <span class="readout__v ok mono ltr">OFFLINE ✓</span>
       </div>
     </div>
-    <div class="coords mono"><span>24°28′N · 54°22′E</span><span>ELEV 12M</span><span>OFFLINE ✓</span></div>
-    <svg class="dunes" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 120 C 300 60 520 150 760 110 C 980 74 1080 130 1200 96 L1200 200 L0 200 Z" fill="var(--sand-soft)" opacity="0.55"/>
-      <path d="M0 150 C 260 100 500 175 780 140 C 1000 112 1110 165 1200 140 L1200 200 L0 200 Z" fill="var(--sand)" opacity="0.9"/>
-    </svg>
-  </header>
+  </div>
+</section>
 
-  <!-- STRIP -->
-  <div class="strip"><div class="wrap">
-    <span>ذكاء اصطناعي مدمج <span class="en">Built-in AI</span></span>
-    <span><span class="dot"></span> يعمل بلا إنترنت <span class="en">Works offline</span></span>
-    <span><span class="dot"></span> iOS &amp; Android</span>
-    <span><span class="dot"></span> خرائط أقمار <span class="en">Satellite maps</span></span>
-    <span><span class="dot"></span> تخاطب صوتي <span class="en">Walkie-talkie</span></span>
-    <span><span class="dot"></span> قبلة ومواقيت <span class="en">Qibla &amp; prayer</span></span>
-    <span><span class="dot"></span> عربي / English</span>
-  </div></div>
+<!-- ============ المسار ============ -->
+<section class="trail" id="trail">
+  <div class="sec-head rise">
+    <p class="eyebrow eyebrow--muted" data-ar="نقاط المسار" data-en="Waypoints">نقاط المسار</p>
+    <h2 data-ar="ست أدوات، وكل واحدة تقول لك بصراحة متى تحتاج شبكة" data-en="Six tools — and each one tells you plainly when it needs a signal">ست أدوات، وكل واحدة تقول لك بصراحة متى تحتاج شبكة</h2>
+    <p data-ar="الملاحة والقبلة والمواقيت تعمل داخل جهازك بلا أي اتصال. التخاطب الصوتي والمجموعات والمساعد الذكي تحتاج شبكة. تعرف ذلك من هنا، لا من وسط الصحراء." data-en="Navigation, qibla and prayer times run entirely on your device. Voice, groups and the AI assistant need a connection. Better you learn that here than in the middle of the desert.">الملاحة والقبلة والمواقيت تعمل داخل جهازك بلا أي اتصال. التخاطب الصوتي والمجموعات والمساعد الذكي تحتاج شبكة. تعرف ذلك من هنا، لا من وسط الصحراء.</p>
+  </div>
 
-  <!-- FEATURES -->
-  <section class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">ما الذي يميّز أثر · What makes Athar</span>
-      <h2>كل أدوات الرحلة، في مكان واحد</h2>
-      <div class="h2-en">Every tool for the journey, in one place</div>
-      <p>صُمّم أثر لعشاق الرحلات أينما وجدوا — في البرّ والبحر. مدمج بأدوات الذكاء الاصطناعي، ويمتاز بنظام تتبّع عبر الأقمار الصناعية يتبع رحلتك ويسجّلها حتى عند انقطاع الإنترنت، لترسلها لاحقاً لمجموعتك وأصدقائك.</p>
-      <div class="p-en">Built for adventure lovers wherever they roam — on land or at sea. Powered by AI, featuring satellite tracking that records your journey offline and lets you share it with your group.</div>
-    </div>
+  <div class="trail__body">
+  <div class="trail__rail">
 
-    <div class="grid">
-      <article class="card reveal">
-        <span class="num">01</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>
-        <h3>خرائط تعمل بلا إنترنت</h3>
-        <div class="h3-en">Offline maps</div>
-        <p>نزّل مناطق صحراوية بدقة أقمار صناعية عالية قبل رحلتك، وتنقّل بثقة حتى بلا أي شبكة.</p>
-        <div class="p-en">Download high-res satellite regions before you go, and navigate with zero signal.</div>
-        <ul>
-          <li>خرائط جاهزة عالية الدقة (z17) · Ready high-res maps</li>
-          <li>تتبّع GPS مباشر ودائرة السرعة · Live GPS &amp; speed</li>
-          <li>تسجيل الرحلات والعودة لنقطة البداية · Trip recording &amp; backtrack</li>
-          <li>علامات ومواقع: مخيّم، ماء، خطر · Waypoints</li>
-        </ul>
-      </article>
-
-      <article class="card reveal">
-        <span class="num">02</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-        <h3>تخاطب صوتي فوري</h3>
-        <div class="h3-en">Instant walkie-talkie</div>
-        <p>واكي توكي مدمج بسلاسة في التطبيق — اضغط وتكلّم، يوصل صوتك فوراً لكل المجموعة حتى لو التطبيق في الخلفية. لا تحتاج تطبيقاً منفصلاً.</p>
-        <div class="p-en">Seamlessly integrated walkie-talkie — push to talk, your voice reaches the group instantly, even in the background. No separate app needed.</div>
-        <ul>
-          <li>زر تحدّث كبير · Big push-to-talk</li>
-          <li>رسائل صوتية وتشغيل تلقائي · Voice notes &amp; auto-play</li>
-          <li>ترتيب الأصوات بلا تداخل · Ordered, no overlap</li>
-          <li>تنبيه حتى لو التطبيق مقفول · Alerts when closed</li>
-        </ul>
-      </article>
-
-      <article class="card reveal">
-        <span class="num">03</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16 20a4.5 4.5 0 0 1 6-4"/></svg>
-        <h3>مجموعات ومحادثات</h3>
-        <div class="h3-en">Groups &amp; chats</div>
-        <p>أنشئ مجموعة رحلتك، شارك موقعك الحيّ على الخريطة، وتابع أفراد مجموعتك لحظة بلحظة.</p>
-        <div class="p-en">Create your trip group, share your live location, and track everyone on the map.</div>
-        <ul>
-          <li>مجموعات ومحادثات مباشرة · Groups &amp; DMs</li>
-          <li>مواقع المجموعة الحيّة · Live member positions</li>
-          <li>طلبات صداقة وملفات بصور · Requests &amp; profiles</li>
-          <li>مشاركة العلامات والرحلات · Share waypoints &amp; trips</li>
-        </ul>
-      </article>
-
-      <article class="card reveal">
-        <span class="num">04</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="M9 11v2M15 11v2M12 3v3M8 21h8"/></svg>
-        <h3>مساعد ذكي ينفّذ أوامرك</h3>
-        <div class="h3-en">An AI copilot that acts</div>
-        <p>لا يجيب فقط — بل يتصرّف. اطلب منه بصوتك أو كتابتك وهو ينفّذ داخل التطبيق مباشرة.</p>
-        <div class="p-en">It doesn't just answer — it acts. Ask by voice or text and it runs the command in the app.</div>
-        <ul>
-          <li>«اجعلها وجهتي» → يحدّدها على الخريطة</li>
-          <li>«أرسل لمحمد» → بعد تأكيدك · Send a message</li>
-          <li>بحث الأماكن القريبة · Nearby search</li>
-          <li>أوامر ورد صوتي اختياري · Voice in &amp; out</li>
-        </ul>
-      </article>
-
-      <article class="card reveal">
-        <span class="num">05</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z"/><path d="m9 12 2 2 4-4"/></svg>
-        <h3>القبلة والمواقيت والطوارئ</h3>
-        <div class="h3-en">Qibla, prayer &amp; emergency</div>
-        <p>رفيقك الروحي والآمن أينما كنت — يحسب كل شيء محلياً من موقعك بلا إنترنت.</p>
-        <div class="p-en">Your spiritual and safety companion — all computed locally, offline.</div>
-        <ul>
-          <li>عدّاد الصلاة القادمة والشروق · Prayer countdown</li>
-          <li>بوصلة قبلة دقيقة · Accurate qibla</li>
-          <li>أرقام طوارئ حسب دولتك · Local emergency numbers</li>
-          <li>زر SOS بارز · Prominent SOS</li>
-        </ul>
-      </article>
-
-      <article class="card reveal">
-        <span class="num">06</span>
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-        <h3>لغتان وحساب آمن</h3>
-        <div class="h3-en">Bilingual &amp; secure account</div>
-        <p>واجهة عربية أصيلة أو إنجليزية بضغطة، وحساب يبقى معك على أي جهاز.</p>
-        <div class="p-en">A true Arabic interface or English in a tap, and an account that follows you to any device.</div>
-        <ul>
-          <li>عربي / English — تبديل فوري</li>
-          <li>استرجاع الحساب بالبريد · Email recovery</li>
-          <li>كود صداقة مميّز · Unique friend code</li>
-          <li>إشعارات فورية · Push notifications</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <!-- SHOWCASE -->
-  <section class="showcase"><div class="wrap">
-    <div class="reveal">
-      <div class="phone" role="img" aria-label="واجهة خريطة أثر · Athar map screen">
-        <div class="screen">
-          <canvas class="map-canvas" id="mapc" width="260" height="520"></canvas>
-          <div class="hud">
-            <div class="hud-top">🚗 48 كم/س · 🧭 312° · ±4م</div>
-            <div class="menu-pill">☰<br>خصائص</div>
-            <div class="hud-dial"><b>48</b><i>كم/س</i></div>
-            <div class="ptt">🎙️</div>
+    <!-- WP 01 -->
+    <article class="wp rise" data-signal="off">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-01</span>
+            <span class="chip chip--off"><i class="dot"></i><span data-ar="بلا إنترنت" data-en="Offline">بلا إنترنت</span></span>
           </div>
+          <h3 data-ar="خرائط أقمار صناعية تعمل بلا شبكة" data-en="Satellite maps that work with no signal">خرائط أقمار صناعية تعمل بلا شبكة</h3>
+          <p data-ar="نزّل منطقتك بدقة z17 وأنت في البيت، ثم أغلق البيانات تمامًا. الخريطة والموقع والسرعة تبقى شغّالة." data-en="Download your area at z17 detail while you're still home, then switch data off entirely. Map, position and speed keep working.">نزّل منطقتك بدقة z17 وأنت في البيت، ثم أغلق البيانات تمامًا. الخريطة والموقع والسرعة تبقى شغّالة.</p>
+          <ul>
+            <li data-ar="مناطق جاهزة بدقة عالية (z17)" data-en="Ready high-detail regions (z17)">مناطق جاهزة بدقة عالية (z17)</li>
+            <li data-ar="تتبّع مباشر للموقع والسرعة والاتجاه" data-en="Live position, speed and heading">تتبّع مباشر للموقع والسرعة والاتجاه</li>
+            <li data-ar="تسجيل الرحلة وتصديرها ملف GPX" data-en="Trip recording with GPX export">تسجيل الرحلة وتصديرها ملف GPX</li>
+            <li data-ar="علامات جاهزة: مخيّم، ماء، خطر" data-en="Waypoints: camp, water, hazard">علامات جاهزة: مخيّم، ماء، خطر</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="خريطة محمّلة مسبقًا">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <g stroke="#EDE2CE" stroke-opacity=".08">
+              <path d="M100 0v260M200 0v260M300 0v260M0 65h400M0 130h400M0 195h400"/>
+            </g>
+            <g fill="#3FCF8E" fill-opacity=".05" stroke="#3FCF8E" stroke-opacity=".35">
+              <rect x="100" y="65" width="100" height="65"/><rect x="200" y="65" width="100" height="65"/>
+              <rect x="100" y="130" width="100" height="65"/><rect x="200" y="130" width="100" height="65"/>
+            </g>
+            <g fill="none" stroke="#EDE2CE" stroke-opacity=".14">
+              <path d="M30 210c50-26 88-6 132-30s70-64 118-70 60 14 90 8"/>
+              <path d="M30 236c54-28 92-8 138-32s72-62 122-68 58 12 90 6"/>
+            </g>
+            <path d="M64 224c46-14 62-52 106-64s72 8 108-22 56-40 84-42" fill="none" stroke="#3FCF8E" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="64" cy="224" r="4" fill="#3FCF8E"/>
+            <circle cx="362" cy="96" r="4.5" fill="#0A1419" stroke="#3FCF8E" stroke-width="2.4"/>
+            <g font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.6">
+              <text x="16" y="28" fill="#8E8471">TILES · z17</text>
+              <text x="16" y="46" fill="#3FCF8E">DOWNLOADED 4/4</text>
+            </g>
+            <rect x="300" y="18" width="84" height="22" fill="none" stroke="#3FCF8E" stroke-opacity=".5" rx="11"/>
+            <text x="316" y="33" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.4" fill="#3FCF8E">OFFLINE</text>
+          </svg>
         </div>
       </div>
-    </div>
-    <div class="why reveal">
-      <span class="eyebrow">لماذا أثر · Why Athar</span>
-      <h2>لأن أفضل الطرق لا تصلها الشبكة</h2>
-      <div class="h2-en">Because the best routes have no signal</div>
-      <p>في قلب الصحراء أو عرض البحر تنقطع التغطية، لكن رحلتك يجب أن تستمر. أثر يجمع الخريطة والتواصل والذكاء الاصطناعي وتتبّع الأقمار الصناعية — كلها في تطبيق واحد — لتبقى واثقاً من طريقك، وقريباً من رفاقك، وتحفظ ذكريات رحلاتك.</p>
-      <div class="p-en">In the heart of the desert or out at sea, coverage fades but your trip goes on. Athar unites maps, comms, AI, and satellite tracking — all in one app — so you stay sure, connected, and preserve your journey memories.</div>
-      <div class="stats">
-        <div class="stat"><b>0</b><span>شبكة مطلوبة للتنقّل</span><span class="en">signal to navigate</span></div>
-        <div class="stat"><b>z17</b><span>دقة الخرائط الجاهزة</span><span class="en">map detail</span></div>
-        <div class="stat"><b>2</b><span>منصّتان</span><span class="en">iOS &amp; Android</span></div>
-      </div>
-    </div>
-  </div></section>
+    </article>
 
-  <!-- FINAL -->
-  <section class="final" id="download">
-    <svg class="contours" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="1.2">
-        <path d="M-50 280 C 240 210 430 320 640 270 S 1020 180 1260 240"/>
-        <path d="M-50 320 C 240 250 430 360 640 310 S 1020 220 1260 280"/>
-        <path d="M-50 240 C 260 180 420 270 660 230 S 1040 150 1260 200"/>
+    <!-- WP 02 -->
+    <article class="wp rise" data-signal="net">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-02</span>
+            <span class="chip chip--net"><i class="dot"></i><span data-ar="يحتاج شبكة" data-en="Needs signal">يحتاج شبكة</span></span>
+          </div>
+          <h3 data-ar="تخاطب صوتي مع مجموعتك" data-en="Push-to-talk with your group">تخاطب صوتي مع مجموعتك</h3>
+          <p data-ar="اضغط زر التحدّث فيصل صوتك لكل من في المجموعة، حتى والتطبيق في الخلفية. لا تحتاج تطبيقًا منفصلًا." data-en="Hold the talk button and your voice reaches everyone in the group, even with the app in the background. No separate app.">اضغط زر التحدّث فيصل صوتك لكل من في المجموعة، حتى والتطبيق في الخلفية. لا تحتاج تطبيقًا منفصلًا.</p>
+          <ul>
+            <li data-ar="زر تحدّث كبير يُستخدم بيد واحدة" data-en="One-handed talk button">زر تحدّث كبير يُستخدم بيد واحدة</li>
+            <li data-ar="تشغيل تلقائي للرسائل الواردة" data-en="Incoming messages play automatically">تشغيل تلقائي للرسائل الواردة</li>
+            <li data-ar="ترتيب الأصوات بالدور بلا تداخل" data-en="Queued playback, no overlap">ترتيب الأصوات بالدور بلا تداخل</li>
+            <li data-ar="تنبيه يصلك والتطبيق مقفل" data-en="Alerts while the app is closed">تنبيه يصلك والتطبيق مقفل</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="زر التحدّث والموجة الصوتية">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <g fill="none" stroke="#5FA8E8">
+              <circle cx="120" cy="130" r="46" stroke-opacity=".9" stroke-width="2"/>
+              <circle cx="120" cy="130" r="66" stroke-opacity=".38"/>
+              <circle cx="120" cy="130" r="86" stroke-opacity=".18"/>
+              <circle cx="120" cy="130" r="106" stroke-opacity=".08"/>
+            </g>
+            <g fill="#5FA8E8" transform="translate(120 130)">
+              <rect x="-6" y="-22" width="12" height="26" rx="6"/>
+              <path d="M-13 -2a13 13 0 0 0 26 0" fill="none" stroke="#5FA8E8" stroke-width="2.6"/>
+              <rect x="-1.3" y="11" width="2.6" height="9"/>
+            </g>
+            <g stroke="#EDE2CE" stroke-opacity=".85" stroke-width="3" stroke-linecap="round">
+              <path d="M232 130v0"/><path d="M232 116v28"/><path d="M248 100v60"/><path d="M264 122v16"/>
+              <path d="M280 92v76"/><path d="M296 112v36"/><path d="M312 126v8"/><path d="M328 104v52"/>
+              <path d="M344 120v20"/><path d="M360 128v4"/>
+            </g>
+            <text x="232" y="196" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.6" fill="#5FA8E8">LIVE · 0:04</text>
+            <text x="232" y="216" font-family="IBM Plex Sans Arabic,sans-serif" font-size="12" fill="#8E8471">٤ في المجموعة</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 03 -->
+    <article class="wp rise" data-signal="net">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-03</span>
+            <span class="chip chip--net"><i class="dot"></i><span data-ar="يحتاج شبكة" data-en="Needs signal">يحتاج شبكة</span></span>
+          </div>
+          <h3 data-ar="مجموعات ومواقع حيّة" data-en="Groups and live positions">مجموعات ومواقع حيّة</h3>
+          <p data-ar="أنشئ مجموعة الرحلة، شارك موقعك، وشاهد أين وصل كل واحد على نفس الخريطة." data-en="Create the trip group, share your position, and see where everyone is on the same map.">أنشئ مجموعة الرحلة، شارك موقعك، وشاهد أين وصل كل واحد على نفس الخريطة.</p>
+          <ul>
+            <li data-ar="مجموعات ومحادثات فردية" data-en="Groups and direct messages">مجموعات ومحادثات فردية</li>
+            <li data-ar="مواقع الأعضاء تتحدّث لحظيًا" data-en="Member positions update live">مواقع الأعضاء تتحدّث لحظيًا</li>
+            <li data-ar="كود صداقة مميّز لكل مستخدم" data-en="A unique friend code per user">كود صداقة مميّز لكل مستخدم</li>
+            <li data-ar="مشاركة العلامات والمسارات المسجّلة" data-en="Share waypoints and recorded tracks">مشاركة العلامات والمسارات المسجّلة</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="مواقع أفراد المجموعة">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <g fill="none" stroke="#EDE2CE" stroke-opacity=".08">
+              <path d="M0 60h400M0 120h400M0 180h400M80 0v260M160 0v260M240 0v260M320 0v260"/>
+            </g>
+            <g stroke="#5FA8E8" stroke-opacity=".35" stroke-dasharray="4 6">
+              <path d="M200 130 96 78M200 130 320 90M200 130 132 200M200 130 296 196"/>
+            </g>
+            <g>
+              <circle cx="200" cy="130" r="9" fill="#3FCF8E"/>
+              <circle class="pulse" cx="200" cy="130" r="9" fill="none" stroke="#3FCF8E" stroke-width="1.5"/>
+            </g>
+            <g fill="#0A1419" stroke="#5FA8E8" stroke-width="2.4">
+              <circle cx="96" cy="78" r="7"/><circle cx="320" cy="90" r="7"/>
+              <circle cx="132" cy="200" r="7"/><circle cx="296" cy="196" r="7"/>
+            </g>
+            <g font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.3" fill="#8E8471">
+              <text x="76" y="62">1.2 km</text><text x="300" y="74">3.4 km</text>
+              <text x="112" y="224">0.8 km</text><text x="276" y="220">2.1 km</text>
+            </g>
+            <rect x="16" y="18" width="128" height="22" rx="11" fill="none" stroke="#5FA8E8" stroke-opacity=".45"/>
+            <text x="30" y="33" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.4" fill="#5FA8E8">GROUP · 5 ONLINE</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 04 -->
+    <article class="wp rise" data-signal="net">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-04</span>
+            <span class="chip chip--net"><i class="dot"></i><span data-ar="يحتاج شبكة" data-en="Needs signal">يحتاج شبكة</span></span>
+          </div>
+          <h3 data-ar="مساعد ذكي ينفّذ، لا يشرح فقط" data-en="An assistant that acts, not just answers">مساعد ذكي ينفّذ، لا يشرح فقط</h3>
+          <p data-ar="قل له بصوتك أو اكتب له، فينفّذ الأمر داخل التطبيق ويعرض عليك النتيجة قبل التنفيذ النهائي." data-en="Speak or type, and it runs the command inside the app — showing you the result before it commits.">قل له بصوتك أو اكتب له، فينفّذ الأمر داخل التطبيق ويعرض عليك النتيجة قبل التنفيذ النهائي.</p>
+          <ul>
+            <li data-ar="«اجعلها وجهتي» ← يرسم الطريق إليها" data-en="&quot;Make this my destination&quot; → plots the route">«اجعلها وجهتي» ← يرسم الطريق إليها</li>
+            <li data-ar="«أرسل لمحمد» ← بعد تأكيدك أنت" data-en="&quot;Message Mohammed&quot; → after you confirm">«أرسل لمحمد» ← بعد تأكيدك أنت</li>
+            <li data-ar="بحث عن الأماكن القريبة منك" data-en="Search for places near you">بحث عن الأماكن القريبة منك</li>
+            <li data-ar="ردّ صوتي اختياري بالعربية" data-en="Optional spoken replies in Arabic">ردّ صوتي اختياري بالعربية</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="أمر صوتي ينفّذ داخل التطبيق">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <rect x="28" y="42" width="248" height="46" rx="23" fill="#10222B" stroke="#5FA8E8" stroke-opacity=".45"/>
+            <circle cx="252" cy="65" r="9" fill="none" stroke="#5FA8E8" stroke-width="2"/>
+            <rect x="250" y="59" width="4" height="9" rx="2" fill="#5FA8E8"/>
+            <text x="234" y="71" text-anchor="end" font-family="IBM Plex Sans Arabic,sans-serif" font-size="15" fill="#EDE2CE">«اجعلها وجهتي»</text>
+            <g stroke="#5FA8E8" stroke-width="2" fill="none">
+              <path d="M152 96v28" stroke-dasharray="5 5"/>
+              <path d="M146 118l6 8 6-8"/>
+            </g>
+            <rect x="28" y="140" width="344" height="96" rx="4" fill="#0D1B22" stroke="#183038"/>
+            <g fill="none" stroke="#EDE2CE" stroke-opacity=".08"><path d="M28 172h344M28 204h344M124 140v96M220 140v96M296 140v96"/></g>
+            <path d="M60 220c40-10 52-42 92-52s58 6 88-18" fill="none" stroke="#3FCF8E" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="60" cy="220" r="4" fill="#3FCF8E"/>
+            <g transform="translate(240 150)">
+              <path d="M0 0v34" stroke="#F2A03D" stroke-width="2"/>
+              <path d="M0 2h22l-6 7 6 7H0z" fill="#F2A03D"/>
+            </g>
+            <text x="266" y="196" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.3" fill="#F2A03D">DEST SET</text>
+            <text x="266" y="212" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.3" fill="#8E8471">18.4 km · 312°</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 05 -->
+    <article class="wp rise" data-signal="off">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-05</span>
+            <span class="chip chip--off"><i class="dot"></i><span data-ar="بلا إنترنت" data-en="Offline">بلا إنترنت</span></span>
+          </div>
+          <h3 data-ar="القبلة والمواقيت وزر الطوارئ" data-en="Qibla, prayer times and SOS">القبلة والمواقيت وزر الطوارئ</h3>
+          <p data-ar="كلها محسوبة داخل جهازك من موقعك مباشرة. لا تحتاج اتصالًا، ولا تتوقّف حين تتوقّف الشبكة." data-en="All computed on your device from your position. No connection needed, and nothing stops when the signal does.">كلها محسوبة داخل جهازك من موقعك مباشرة. لا تحتاج اتصالًا، ولا تتوقّف حين تتوقّف الشبكة.</p>
+          <ul>
+            <li data-ar="بوصلة قبلة دقيقة من إحداثياتك" data-en="Accurate qibla from your coordinates">بوصلة قبلة دقيقة من إحداثياتك</li>
+            <li data-ar="عدّاد الصلاة القادمة والشروق" data-en="Countdown to the next prayer and sunrise">عدّاد الصلاة القادمة والشروق</li>
+            <li data-ar="أرقام الطوارئ حسب الدولة التي أنت فيها" data-en="Emergency numbers for the country you're in">أرقام الطوارئ حسب الدولة التي أنت فيها</li>
+            <li data-ar="زر SOS يرسل إحداثياتك فور توفّر الشبكة" data-en="SOS sends your coordinates the moment signal returns">زر SOS يرسل إحداثياتك فور توفّر الشبكة</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="بوصلة القبلة والمواقيت">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <g transform="translate(126 130)">
+              <circle r="86" fill="none" stroke="#EDE2CE" stroke-opacity=".14"/>
+              <circle r="68" fill="none" stroke="#EDE2CE" stroke-opacity=".08"/>
+              <g stroke="#EDE2CE" stroke-opacity=".3">
+                <path d="M0 -86v-10M0 86v10M-86 0h-10M86 0h10"/>
+              </g>
+              <g stroke="#EDE2CE" stroke-opacity=".16">
+                <path d="M60.8 -60.8l7-7M-60.8 60.8l-7 7M60.8 60.8l7 7M-60.8 -60.8l-7-7"/>
+              </g>
+              <path d="M0 -70L11 8 0 -2l-11 10z" fill="#3FCF8E" transform="rotate(38)"/>
+              <circle r="4.5" fill="#EDE2CE"/>
+              <text x="-5" y="-100" font-family="IBM Plex Mono,monospace" font-size="12" fill="#8E8471">N</text>
+            </g>
+            <text x="196" y="52" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.6" fill="#8E8471">QIBLA</text>
+            <text x="196" y="76" font-family="IBM Plex Mono,monospace" font-size="21" fill="#3FCF8E">258.4°</text>
+            <g font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.4">
+              <text x="196" y="112" fill="#8E8471">NEXT · المغرب</text>
+              <text x="196" y="136" font-size="19" fill="#EDE2CE">01:12:40</text>
+            </g>
+            <rect x="196" y="168" width="130" height="42" rx="4" fill="none" stroke="#E4533F" stroke-width="2"/>
+            <text x="228" y="195" font-family="IBM Plex Mono,monospace" font-size="17" letter-spacing="4" fill="#E4533F">SOS</text>
+            <text x="196" y="228" font-family="IBM Plex Sans Arabic,sans-serif" font-size="11" fill="#8E8471">يرسل موقعك عند عودة الشبكة</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 06 -->
+    <article class="wp rise" data-signal="off">
+      <div class="wp__grid">
+        <div class="wp__txt">
+          <div class="wp__meta">
+            <span class="wp__id mono ltr">WP-06</span>
+            <span class="chip chip--off"><i class="dot"></i><span data-ar="بلا إنترنت" data-en="Offline">بلا إنترنت</span></span>
+          </div>
+          <h3 data-ar="عربي كامل، لا ترجمة مقلوبة" data-en="Built in Arabic, not translated into it">عربي كامل، لا ترجمة مقلوبة</h3>
+          <p data-ar="الواجهة مبنية من اليمين لليسار أصلًا، والأرقام والاتجاهات والخرائط كلها بنفس المنطق. وبضغطة واحدة تصير إنجليزية." data-en="The interface is right-to-left by design — numbers, bearings and maps all follow the same logic. One tap makes it English.">الواجهة مبنية من اليمين لليسار أصلًا، والأرقام والاتجاهات والخرائط كلها بنفس المنطق. وبضغطة واحدة تصير إنجليزية.</p>
+          <ul>
+            <li data-ar="تبديل فوري بين العربية والإنجليزية" data-en="Instant Arabic / English switch">تبديل فوري بين العربية والإنجليزية</li>
+            <li data-ar="حسابك ومساراتك تنتقل معك لأي جهاز" data-en="Your account and tracks follow you to any device">حسابك ومساراتك تنتقل معك لأي جهاز</li>
+            <li data-ar="استرجاع الحساب بالبريد الإلكتروني" data-en="Account recovery by email">استرجاع الحساب بالبريد الإلكتروني</li>
+            <li data-ar="iOS و Android بنفس المزايا" data-en="iOS and Android, feature for feature">iOS و Android بنفس المزايا</li>
+          </ul>
+        </div>
+        <div class="wp__art">
+          <svg viewBox="0 0 400 260" role="img" aria-label="مبدّل اللغة وكود الصداقة">
+            <rect x="1" y="1" width="398" height="258" fill="#0A1419" stroke="#183038"/>
+            <rect x="60" y="52" width="280" height="60" rx="30" fill="#10222B" stroke="#183038"/>
+            <rect x="64" y="56" width="136" height="52" rx="26" fill="#3FCF8E" fill-opacity=".14" stroke="#3FCF8E"/>
+            <text x="112" y="90" font-family="Reem Kufi,sans-serif" font-size="24" fill="#3FCF8E">عربي</text>
+            <text x="248" y="90" font-family="IBM Plex Sans Condensed,sans-serif" font-size="22" fill="#8E8471" letter-spacing="2">ENGLISH</text>
+            <text x="60" y="150" font-family="IBM Plex Mono,monospace" font-size="10" letter-spacing="1.8" fill="#8E8471">FRIEND CODE</text>
+            <g>
+              <rect x="60" y="162" width="280" height="46" rx="4" fill="none" stroke="#EDE2CE" stroke-opacity=".2" stroke-dasharray="6 5"/>
+              <text x="88" y="193" font-family="IBM Plex Mono,monospace" font-size="24" letter-spacing="9" fill="#EDE2CE">ATHR-7K2Q</text>
+            </g>
+            <text x="60" y="232" font-family="IBM Plex Sans Arabic,sans-serif" font-size="11" fill="#8E8471">شارك الكود ليضيفك أصحابك في ثانية</text>
+          </svg>
+        </div>
+      </div>
+    </article>
+
+  </div>
+  </div>
+</section>
+
+<!-- ============ لماذا ============ -->
+<section class="why" id="why">
+  <div class="why__grid">
+    <div class="rise">
+      <p class="eyebrow eyebrow--muted" data-ar="لماذا أثر" data-en="Why Athr">لماذا أثر</p>
+      <h2 data-ar="أفضل الطرق هي التي لا تصلها الشبكة" data-en="The best routes are the ones with no coverage">أفضل الطرق هي التي لا تصلها الشبكة</h2>
+      <p data-ar="في قلب الرملة أو عرض البحر تنقطع التغطية، لكن الرحلة تكمل. أثر يجمع الخريطة والتواصل والتتبّع في تطبيق واحد، ويكتب لك أثر رحلتك لتعود منه أو تشاركه." data-en="Deep in the sand or out at sea the coverage fades, but the trip goes on. Athr puts the map, the comms and the tracking in one app — and writes down the trace you can follow back or pass on.">في قلب الرملة أو عرض البحر تنقطع التغطية، لكن الرحلة تكمل. أثر يجمع الخريطة والتواصل والتتبّع في تطبيق واحد، ويكتب لك أثر رحلتك لتعود منه أو تشاركه.</p>
+    </div>
+    <div class="status rise">
+      <div class="status__hd">
+        <span>System status</span>
+        <span class="live">READY</span>
+      </div>
+      <dl class="status__list">
+        <div class="status__row"><dt data-ar="شبكة مطلوبة للملاحة" data-en="Signal required to navigate">شبكة مطلوبة للملاحة</dt><dd class="ok ltr">0</dd></div>
+        <div class="status__row"><dt data-ar="دقة الخرائط الجاهزة" data-en="Preloaded map detail">دقة الخرائط الجاهزة</dt><dd class="ltr">z17</dd></div>
+        <div class="status__row"><dt data-ar="تصدير المسارات" data-en="Track export">تصدير المسارات</dt><dd class="ltr">GPX</dd></div>
+        <div class="status__row"><dt data-ar="المنصّات" data-en="Platforms">المنصّات</dt><dd class="ltr">iOS · Android</dd></div>
+        <div class="status__row"><dt data-ar="اللغات" data-en="Languages">اللغات</dt><dd class="ltr">AR · EN</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ التحميل ============ -->
+<section class="get" id="get">
+  <div class="get__lines" aria-hidden="true">
+    <svg viewBox="0 0 1440 460" preserveAspectRatio="none" role="presentation">
+      <g fill="none" stroke="#5FA8E8" stroke-opacity=".16">
+        <path d="M0 300c180-60 320 20 480-30s280-130 480-110 300 80 480 60"/>
+        <path d="M0 340c180-60 320 20 480-30s280-130 480-110 300 80 480 60" stroke-opacity=".1"/>
+        <path d="M0 380c180-60 320 20 480-30s280-130 480-110 300 80 480 60" stroke-opacity=".06"/>
       </g>
     </svg>
-    <div class="wrap">
-      <svg class="mark needle" viewBox="0 0 100 100" width="56" height="56" aria-hidden="true" style="margin-bottom:24px">
-        <circle cx="50" cy="50" r="34" fill="none" stroke="#FBF6EA" stroke-width="3" opacity="0.5"/>
-        <path d="M50 24 l8 26 -8 26 -8 -26 z" fill="var(--sand)"/>
-        <circle cx="50" cy="50" r="4" fill="#FBF6EA"/>
-      </svg>
-      <h2>ابدأ رحلتك مع أثر</h2>
-      <div class="h2-en">Start your journey with Athar</div>
-      <p>حمّل التطبيق الآن، ونزّل خريطة منطقتك قبل أن تنطلق. البرّ والبحر ينتظرانك.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#"> App Store <small>iOS</small></a>
-        <a class="btn btn-ghost" href="#">Android <small>APK</small></a>
-      </div>
+  </div>
+  <div class="wrap rise">
+    <p class="eyebrow" data-ar="ابدأ من هنا" data-en="Start here">ابدأ من هنا</p>
+    <h2 data-ar="نزّل خريطتك قبل ما تنطلق" data-en="Download your map before you drive out">نزّل خريطتك قبل ما تنطلق</h2>
+    <p data-ar="ثبّت أثر، اختر منطقتك، ونزّلها وأنت على الواي فاي. بعدها الصحراء لك." data-en="Install Athr, pick your region, and pull it down while you're still on Wi-Fi. After that, the desert is yours.">ثبّت أثر، اختر منطقتك، ونزّلها وأنت على الواي فاي. بعدها الصحراء لك.</p>
+    <div class="get__actions">
+      <!-- استبدل # برابط App Store -->
+      <a class="btn btn--go" href="#" data-ar="App Store" data-en="App Store">App Store</a>
+      <!-- استبدل # برابط Google Play أو ملف APK -->
+      <a class="btn btn--ghost" href="#" data-ar="Google Play" data-en="Google Play">Google Play</a>
+      <a class="btn btn--ghost" href="#" data-ar="تحميل APK مباشر" data-en="Direct APK">تحميل APK مباشر</a>
     </div>
-  </section>
+    <p class="get__note ltr">uae-athr.com · <span data-ar="مجاني" data-en="Free">مجاني</span> · <span data-ar="بلا إعلانات" data-en="No ads">بلا إعلانات</span></p>
+  </div>
+</section>
 
-  <footer><div class="wrap">
-    <div class="site">uae-athr.com</div>
-    <div class="meta">أثر · ATHR — NAVIGATE THE WILD · © 2026</div>
-  </div></footer>
-</div>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <span>أثر · ATHR</span>
+    <span data-ar="ملاحة برّية وبحرية" data-en="Land &amp; sea navigation">ملاحة برّية وبحرية</span>
+    <span class="ltr">© 2026 · uae-athr.com</span>
+  </div>
+</footer>
 
 <script>
-  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  (function(){
-    const c=document.getElementById('mapc'); if(!c) return; const x=c.getContext('2d'); const W=c.width,H=c.height;
-    const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#b9964f'); g.addColorStop(.5,'#a5813f'); g.addColorStop(1,'#8f6d34');
-    x.fillStyle=g; x.fillRect(0,0,W,H);
-    x.globalAlpha=.18; for(let i=-H;i<W+H;i+=14){x.strokeStyle=i%28?'#6f5626':'#d8b366'; x.lineWidth=6; x.beginPath(); x.moveTo(i,0); x.lineTo(i-H,H); x.stroke();}
-    x.globalAlpha=.10; for(let i=0;i<180;i++){x.fillStyle=Math.random()>.5?'#5f4a20':'#e5c583'; x.fillRect(Math.random()*W,Math.random()*H,2,2);}
-    x.globalAlpha=1; x.strokeStyle='rgba(60,48,22,.55)'; x.lineWidth=10; x.lineCap='round';
-    x.beginPath(); x.moveTo(-10,120); x.bezierCurveTo(80,180,120,260,60,340); x.bezierCurveTo(20,400,120,470,240,500); x.stroke();
-    x.setLineDash([8,7]); x.strokeStyle='#5E6AD2'; x.lineWidth=3; x.beginPath(); x.moveTo(130,470); x.bezierCurveTo(150,360,110,270,180,190); x.lineTo(210,120); x.stroke(); x.setLineDash([]);
-    x.fillStyle='#E5484D'; x.beginPath(); x.arc(210,116,7,0,7); x.fill();
-    x.fillStyle='#fff'; x.beginPath(); x.arc(130,472,7,0,7); x.fill(); x.fillStyle='#5E6AD2'; x.beginPath(); x.arc(130,472,4.5,0,7); x.fill();
-    x.fillStyle='#12A594'; [[90,300],[160,340]].forEach(p=>{x.beginPath(); x.arc(p[0],p[1],5,0,7); x.fill();});
-  })();
-</script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---- كشف الظهور عند التمرير ---- */
+  var targets = document.querySelectorAll(".rise, .wp");
+  if ("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("seen"); io.unobserve(e.target); }
+      });
+    }, {threshold:.15, rootMargin:"0px 0px -8% 0px"});
+    targets.forEach(function(t){ io.observe(t); });
+  } else {
+    targets.forEach(function(t){ t.classList.add("seen"); });
+  }
+
+  /* ---- عدّادات لوحة القراءة ---- */
+  function countUp(el){
+    var end = parseFloat(el.getAttribute("data-count"));
+    var suffix = el.getAttribute("data-suffix") || "";
+    if (reduce){ el.textContent = end + suffix; return; }
+    var t0 = null, dur = 1400;
+    function step(ts){
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(end * eased) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll("[data-count]").forEach(function(el){ countUp(el); });
+
+  /* ---- مبدّل اللغة ---- */
+  var btn = document.getElementById("lang");
+  var lang = "ar";
+  function apply(next){
+    lang = next;
+    var html = document.documentElement;
+    html.lang = lang;
+    html.dir = (lang === "ar") ? "rtl" : "ltr";
+    btn.textContent = (lang === "ar") ? "EN" : "ع";
+    document.querySelectorAll("[data-ar][data-en]").forEach(function(el){
+      var v = el.getAttribute(lang === "ar" ? "data-ar" : "data-en");
+      if (v !== null) el.innerHTML = v;
+    });
+    try { localStorage.setItem("athr-lang", lang); } catch(e){}
+  }
+  btn.addEventListener("click", function(){ apply(lang === "ar" ? "en" : "ar"); });
+  try {
+    var saved = localStorage.getItem("athr-lang");
+    if (saved === "en") apply("en");
+  } catch(e){}
+})();
+</script>
 </body>
 </html>
