@@ -1,119 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>سياسة الخصوصية · أثر · Privacy Policy</title>
-<meta name="description" content="سياسة خصوصية تطبيق أثر — Athar privacy policy.">
+<title>الخصوصية · أثر · Privacy</title>
+<meta name="description" content="سياسة خصوصية تطبيق أثر — Athr privacy policy.">
+<meta name="theme-color" content="#0A1419">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ground:#FBF6EA; --panel:#FFFDF7; --ink:#1B1A12; --ink-soft:#5F5946; --hair:#E4D9BF;
-    --green:#17512F; --sand:#C0851F;
-    --ar:"Sakkal Majalla","Traditional Arabic","Noto Naskh Arabic","Segoe UI",Tahoma,serif;
-    --en:"Iowan Old Style","Palatino Linotype",Georgia,serif;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{--ground:#0D1611; --panel:#132019; --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B; --green:#4BA46B; --sand:#E1AC4E;}
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--ground); color:var(--ink); font-family:var(--ar); line-height:1.85;
-    direction:rtl; text-align:right; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:74ch; margin-inline:auto; padding:0 24px;}
-  header{border-bottom:1px solid var(--hair); background:var(--panel);}
-  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-block:20px; flex-wrap:wrap; gap:12px;}
-  .brand{display:flex; align-items:center; gap:12px;}
-  .brand svg{width:34px;height:34px;}
-  .brand b{font-family:var(--ar); font-size:20px; font-weight:700;}
-  .brand small{font-family:var(--mono); font-size:10px; letter-spacing:.35em; color:var(--ink-soft); display:block; direction:ltr;}
-  nav a{font-family:var(--ar); font-size:15px; color:var(--green); text-decoration:none; margin-inline-start:18px; font-weight:700;}
-  nav a:hover{text-decoration:underline;}
-  main{padding-block:56px;}
-  h1{font-size:clamp(30px,5vw,44px); font-weight:700; line-height:1.25; text-wrap:balance;}
-  .h1-en{font-family:var(--en); font-style:italic; direction:ltr; text-align:right; color:var(--ink-soft); font-size:20px; margin-top:6px;}
-  .updated{font-family:var(--mono); font-size:12px; color:var(--sand); letter-spacing:.06em; margin-top:16px; direction:ltr; text-align:right;}
-  .intro{margin-top:22px; font-size:18px; color:var(--ink-soft);}
-  h2{font-family:var(--ar); font-size:24px; font-weight:700; margin-top:44px; padding-top:8px; border-top:1px solid var(--hair);}
-  .h2-en{font-family:var(--en); font-style:italic; direction:ltr; text-align:right; color:var(--sand); font-size:15px; margin-bottom:8px;}
-  p{margin-top:12px;}
-  .en{font-family:var(--en); font-style:italic; direction:ltr; text-align:right; color:var(--ink-soft); font-size:15px;}
-  ul{margin-top:12px; padding-inline-start:22px;}
-  li{margin-top:8px;}
-  li b{color:var(--ink);}
-  a{color:var(--green);}
-  footer{border-top:1px solid var(--hair); background:var(--panel); margin-top:56px;}
-  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-block:26px;
-    font-family:var(--mono); font-size:12px; color:var(--ink-soft); direction:ltr; letter-spacing:.06em;}
+:root{
+  --ink-900:#0A1419;--ink-850:#0D1B22;--ink-800:#10222B;--ink-700:#183038;
+  --line:rgba(237,226,206,.14);--line-soft:rgba(237,226,206,.07);
+  --sand-50:#F4EDDF;--sand-100:#EDE2CE;--sand-300:#C4B69C;--sand-500:#8E8471;
+  --gnss:#3FCF8E;--pdr:#F2A03D;--back:#5FA8E8;
+  --f-display:"Readex Pro","IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(1.25rem,5vw,4.5rem);--maxw:960px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--f-body);font-weight:400;font-size:clamp(1rem,.95rem+.2vw,1.075rem);line-height:1.8;background:var(--ink-900);color:var(--sand-100);overflow-x:hidden}
+a{color:var(--gnss);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,20,25,.86);backdrop-filter:blur(14px) saturate(1.2);border-block-end:1px solid var(--line-soft)}
+.nav__in{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);max-width:var(--maxw);margin-inline:auto;padding:.7rem var(--pad)}
+.brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;flex:0 0 auto}
+.brand__ar{font-family:var(--f-display);font-weight:700;font-size:1.5rem;line-height:1;color:var(--sand-50)}
+.brand__en{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.42em;color:var(--sand-500);text-transform:uppercase}
+.nav__links{display:flex;gap:1.6rem;margin-inline-start:auto;list-style:none}
+.nav__links a{font-size:.9rem;color:var(--sand-300);padding-block:.35rem;border-block-end:1px solid transparent;transition:color .18s,border-color .18s}
+.nav__links a:hover{color:var(--sand-50);border-block-end-color:var(--gnss);text-decoration:none}
+
+main{padding-block:clamp(3rem,8vh,6rem)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,1rem+4vw,3.4rem);line-height:1.2;color:var(--sand-50);margin-bottom:.3rem}
+.h1-en{font-size:1rem;color:var(--sand-500);font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.updated{font-family:var(--f-mono);font-size:.72rem;color:var(--pdr);letter-spacing:.08em;margin-bottom:1.8rem}
+.intro{font-size:1.1rem;color:var(--sand-300);margin-bottom:1rem}
+.en{color:var(--sand-500);font-size:.88rem;display:block;margin-top:.25rem}
+h2{font-family:var(--f-display);font-weight:600;font-size:1.4rem;color:var(--sand-50);margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--line)}
+h2 .en-label{display:block;font-family:var(--f-mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sand-500);margin-bottom:.3rem;font-weight:400}
+ul{margin-top:.8rem;padding-inline-start:1.4rem}
+li{margin-top:.5rem}
+li b{color:var(--sand-50)}
+p{margin-top:.6rem}
+
+.foot{border-block-start:1px solid var(--line-soft);padding-block:2.2rem;margin-top:2rem}
+.foot__in{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sand-500)}
+.foot a{color:var(--sand-500);text-decoration:none}
+.foot a:hover{color:var(--sand-100)}
+@media(max-width:560px){.nav__links{display:none}.brand__en{display:none}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-  <div class="brand">
-    <img src="logo.png" alt="أثر" style="width:34px;height:34px"/>
-    <div><b>أثر</b><small>A T H A R</small></div>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="brand" href="index.html"><span class="brand__ar">أثر</span><span class="brand__en">ATHR</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="support.html">الدعم</a></li>
+      <li><a href="index.html#get">التطبيق</a></li>
+    </ul>
   </div>
-  <nav><a href="index.html">الرئيسية</a><a href="support.html">الدعم · Support</a></nav>
-</div></header>
+</header>
 
 <main><div class="wrap">
   <h1>سياسة الخصوصية</h1>
   <div class="h1-en">Privacy Policy</div>
-  <div class="updated">آخر تحديث · Last updated: 2026-07-23</div>
+  <div class="updated">آخر تحديث · 2026-07-24</div>
   <p class="intro">نحترم خصوصيتك. توضّح هذه السياسة البيانات التي يجمعها تطبيق «أثر»، وكيف نستخدمها ونحميها.</p>
   <p class="en">We respect your privacy. This policy explains what data the Athar app collects, and how we use and protect it.</p>
 
-  <h2>١) البيانات التي نجمعها</h2>
-  <div class="h2-en">Data we collect</div>
+  <h2><span class="en-label">01</span> البيانات التي نجمعها</h2>
   <ul>
-    <li><b>الحساب:</b> اسم المستخدم ورمز الصداقة، وبريد إلكتروني <b>اختياري</b> إن اخترت تأمين حسابك لاسترجاعه على جهاز آخر.<br><span class="en">Account: your username and friend code, and an optional email if you choose to secure your account for recovery.</span></li>
-    <li><b>الموقع:</b> إحداثيات GPS لعرض موقعك على الخريطة وتسجيل رحلاتك. تعمل بعض الميزات في الخلفية أثناء تسجيل رحلة. لا تُشارك مواقعك إلا <b>بموافقتك الصريحة</b> (مشاركة الموقع الحي).<br><span class="en">Location: GPS coordinates to show your position and record trips; some features run in the background while recording. Locations are shared only with your explicit opt-in.</span></li>
-    <li><b>الرسائل والصوت:</b> الرسائل النصية والصوتية داخل المجموعات تُخزّن لتوصيلها لأعضاء مجموعتك.<br><span class="en">Messages &amp; voice: text and voice messages within groups are stored to deliver them to your group.</span></li>
-    <li><b>الصورة الرمزية:</b> إن رفعت صورة لملفك الشخصي (اختياري).<br><span class="en">Avatar: a profile photo, if you choose to upload one.</span></li>
-    <li><b>الإشعارات:</b> رمز جهاز لإرسال الإشعارات إليك.<br><span class="en">Notifications: a device token to send you push notifications.</span></li>
-    <li><b>المساعد الذكي:</b> عند استخدامه، يُرسَل نص طلبك إلى مزوّد ذكاء اصطناعي عبر خادمنا للحصول على الرد. لا نرسل موقعك كهوية.<br><span class="en">AI copilot: when used, your prompt text is sent to an AI provider via our server to generate a reply.</span></li>
+    <li><b>الحساب:</b> اسم المستخدم ورمز الصداقة، وبريد إلكتروني <b>اختياري</b> إن اخترت تأمين حسابك.<br><span class="en">Account: your username, friend code, and an optional email for recovery.</span></li>
+    <li><b>الموقع:</b> إحداثيات GPS للملاحة وتسجيل الرحلات. لا تُشارك مواقعك إلا <b>بموافقتك الصريحة</b>.<br><span class="en">Location: GPS for navigation and trip recording. Shared only with your explicit opt-in.</span></li>
+    <li><b>الرسائل والصوت:</b> تُخزّن لتوصيلها لأعضاء مجموعتك.<br><span class="en">Messages &amp; voice: stored to deliver to your group.</span></li>
+    <li><b>الصورة الرمزية:</b> اختيارية لملفك الشخصي.<br><span class="en">Avatar: optional profile photo.</span></li>
+    <li><b>الإشعارات:</b> رمز جهاز لإرسال الإشعارات إليك.<br><span class="en">Notifications: a device token for push notifications.</span></li>
+    <li><b>المساعد الذكي:</b> يُرسَل نص طلبك إلى مزوّد ذكاء اصطناعي عبر خادمنا.<br><span class="en">AI: your prompt is sent to an AI provider via our server.</span></li>
   </ul>
 
-  <h2>٢) كيف نستخدم بياناتك</h2>
-  <div class="h2-en">How we use it</div>
-  <p>نستخدم البيانات فقط لتشغيل ميزات التطبيق: الملاحة، التواصل، الإشعارات، واسترجاع الحساب. <b>لا نبيع بياناتك</b> ولا نستخدمها للإعلانات.</p>
-  <p class="en">We use your data only to run the app's features — navigation, communication, notifications, and account recovery. We do not sell your data or use it for advertising.</p>
+  <h2><span class="en-label">02</span> كيف نستخدم بياناتك</h2>
+  <p>نستخدم البيانات فقط لتشغيل ميزات التطبيق — الملاحة، التواصل، الإشعارات، واسترجاع الحساب. <b>لا نبيع بياناتك</b> ولا نستخدمها للإعلانات.</p>
+  <p class="en">We use your data only to run the app. We do not sell it or use it for advertising.</p>
 
-  <h2>٣) المشاركة مع أطراف ثالثة</h2>
-  <div class="h2-en">Third parties</div>
+  <h2><span class="en-label">03</span> أطراف ثالثة</h2>
   <ul>
-    <li><b>Supabase</b> — تخزين الحساب والرسائل بشكل آمن. · Secure data &amp; storage.</li>
-    <li><b>Expo</b> — إرسال الإشعارات. · Push notifications.</li>
-    <li><b>ArcGIS / OpenStreetMap / Google Drive</b> — بلاطات الخرائط وتنزيلها. · Map tiles &amp; downloads.</li>
-    <li>مزوّد الذكاء الاصطناعي — للردود داخل المساعد. · AI provider for copilot replies.</li>
+    <li><b>Supabase</b> — تخزين البيانات والرسائل.<br><span class="en">Secure data &amp; message storage.</span></li>
+    <li><b>Expo</b> — إشعارات.<br><span class="en">Push notifications.</span></li>
+    <li><b>ArcGIS / OpenStreetMap</b> — بلاطات الخرائط.<br><span class="en">Map tiles.</span></li>
+    <li>مزوّد الذكاء الاصطناعي — للردود.<br><span class="en">AI provider for copilot replies.</span></li>
   </ul>
-  <p>هؤلاء المزوّدون يعالجون البيانات لصالحنا فقط، ولا يُسمح لهم باستخدامها لأغراضهم.</p>
-  <p class="en">These providers process data on our behalf only, and may not use it for their own purposes.</p>
+  <p>هؤلاء المزوّدون يعالجون البيانات لصالحنا فقط.</p>
+  <p class="en">These providers process data on our behalf only.</p>
 
-  <h2>٤) حذف الحساب والبيانات</h2>
-  <div class="h2-en">Deleting your account &amp; data</div>
-  <p>يمكنك طلب حذف حسابك وكل بياناتك في أي وقت بمراسلتنا على <a href="mailto:support@uae-athr.com">support@uae-athr.com</a>، وسنحذفها خلال مدة معقولة.</p>
-  <p class="en">You can request deletion of your account and all data anytime by emailing support@uae-athr.com, and we will remove it within a reasonable period.</p>
+  <h2><span class="en-label">04</span> حذف الحساب</h2>
+  <p>يمكنك طلب حذف حسابك وكل بياناتك بمراسلتنا على <a href="mailto:support@uae-athr.com">support@uae-athr.com</a>.</p>
+  <p class="en">Request deletion by emailing support@uae-athr.com.</p>
 
-  <h2>٥) الأمان</h2>
-  <div class="h2-en">Security</div>
-  <p>تُنقل البيانات عبر اتصال مشفّر (HTTPS)، وتُحفظ لدى مزوّدين معتمدين. ومع ذلك لا يوجد نظام آمن بنسبة 100٪.</p>
-  <p class="en">Data is transmitted over encrypted connections (HTTPS) and stored with reputable providers. No system, however, is 100% secure.</p>
+  <h2><span class="en-label">05</span> الأمان</h2>
+  <p>تُنقل البيانات عبر HTTPS، وتُحفظ لدى مزوّدين معتمدين. لا يوجد نظام آمن 100٪.</p>
+  <p class="en">Data is transmitted over HTTPS and stored with reputable providers.</p>
 
-  <h2>٦) الأطفال</h2>
-  <div class="h2-en">Children</div>
-  <p>التطبيق غير موجّه للأطفال دون 13 عاماً، ولا نجمع بياناتهم عن قصد.</p>
-  <p class="en">The app is not directed to children under 13, and we do not knowingly collect their data.</p>
+  <h2><span class="en-label">06</span> الأطفال</h2>
+  <p>التطبيق غير موجّه للأطفال دون 13 عاماً.</p>
+  <p class="en">The app is not directed to children under 13.</p>
 
-  <h2>٧) التغييرات</h2>
-  <div class="h2-en">Changes</div>
-  <p>قد نحدّث هذه السياسة، وسننشر التاريخ الجديد أعلى الصفحة.</p>
-  <p class="en">We may update this policy; the new date will appear at the top of this page.</p>
+  <h2><span class="en-label">07</span> التغييرات</h2>
+  <p>قد نحدّث هذه السياسة، ويظهر التاريخ الجديد أعلاه.</p>
+  <p class="en">We may update this policy; the new date appears above.</p>
 
-  <h2>٨) تواصل معنا</h2>
-  <div class="h2-en">Contact</div>
-  <p>لأي سؤال حول خصوصيتك: <a href="mailto:support@uae-athr.com">support@uae-athr.com</a></p>
+  <h2><span class="en-label">08</span> تواصل معنا</h2>
+  <p><a href="mailto:support@uae-athr.com">support@uae-athr.com</a></p>
+  <p class="en">Contact us at the address above.</p>
 </div></main>
 
-<footer><div class="wrap"><span>uae-athr.com</span><span>أثر · ATHAR © 2026</span></div></footer>
+<footer class="foot">
+  <div class="foot__in">
+    <span>أثر · ATHR</span>
+    <a href="index.html">الرئيسية</a>
+    <a href="support.html">الدعم</a>
+    <span class="ltr">© 2026 · uae-athr.com</span>
+  </div>
+</footer>
+
 </body>
 </html>

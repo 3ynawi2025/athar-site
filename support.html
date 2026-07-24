@@ -1,109 +1,142 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>الدعم · أثر · Support</title>
 <meta name="description" content="دعم تطبيق أثر — Athar support &amp; help.">
+<meta name="theme-color" content="#0A1419">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ground:#FBF6EA; --panel:#FFFDF7; --ink:#1B1A12; --ink-soft:#5F5946; --hair:#E4D9BF;
-    --green:#17512F; --sand:#C0851F;
-    --ar:"Sakkal Majalla","Traditional Arabic","Noto Naskh Arabic","Segoe UI",Tahoma,serif;
-    --en:"Iowan Old Style","Palatino Linotype",Georgia,serif;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{--ground:#0D1611; --panel:#132019; --ink:#EEE7D4; --ink-soft:#9DAE9F; --hair:#26362B; --green:#4BA46B; --sand:#E1AC4E;}
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--ground); color:var(--ink); font-family:var(--ar); line-height:1.85; direction:rtl; text-align:right; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:74ch; margin-inline:auto; padding:0 24px;}
-  header{border-bottom:1px solid var(--hair); background:var(--panel);}
-  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-block:20px; flex-wrap:wrap; gap:12px;}
-  .brand{display:flex; align-items:center; gap:12px;}
-  .brand svg{width:34px;height:34px;}
-  .brand b{font-family:var(--ar); font-size:20px; font-weight:700;}
-  .brand small{font-family:var(--mono); font-size:10px; letter-spacing:.35em; color:var(--ink-soft); display:block; direction:ltr;}
-  nav a{font-family:var(--ar); font-size:15px; color:var(--green); text-decoration:none; margin-inline-start:18px; font-weight:700;}
-  nav a:hover{text-decoration:underline;}
-  main{padding-block:56px;}
-  h1{font-size:clamp(30px,5vw,44px); font-weight:700; line-height:1.25;}
-  .h1-en{font-family:var(--en); font-style:italic; direction:ltr; text-align:right; color:var(--ink-soft); font-size:20px; margin-top:6px;}
-  .intro{margin-top:22px; font-size:18px; color:var(--ink-soft);}
-  .contact{margin-top:28px; background:var(--panel); border:1px solid var(--hair); border-radius:16px; padding:26px 28px;
-    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;}
-  .contact .lbl{font-size:15px; color:var(--ink-soft);}
-  .contact a{font-family:var(--mono); font-size:18px; color:var(--green); text-decoration:none; direction:ltr; font-weight:700;}
-  .contact a:hover{text-decoration:underline;}
-  h2{font-family:var(--ar); font-size:22px; font-weight:700; margin-top:40px;}
-  .faq{margin-top:16px; border:1px solid var(--hair); border-radius:14px; overflow:hidden; background:var(--panel);}
-  details{border-bottom:1px solid var(--hair);}
-  details:last-child{border-bottom:0;}
-  summary{cursor:pointer; padding:18px 22px; font-weight:700; font-size:17px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px;}
-  summary::-webkit-details-marker{display:none;}
-  summary::after{content:"+"; color:var(--sand); font-family:var(--mono); font-size:20px;}
-  details[open] summary::after{content:"–";}
-  .faq p{padding:0 22px 20px; color:var(--ink-soft); font-size:15.5px;}
-  .faq .en{font-family:var(--en); font-style:italic; direction:ltr; text-align:right; display:block; margin-top:6px; font-size:14px; color:var(--ink-soft);}
-  footer{border-top:1px solid var(--hair); background:var(--panel); margin-top:56px;}
-  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-block:26px; font-family:var(--mono); font-size:12px; color:var(--ink-soft); direction:ltr; letter-spacing:.06em;}
+:root{
+  --ink-900:#0A1419;--ink-850:#0D1B22;--ink-800:#10222B;--ink-700:#183038;
+  --line:rgba(237,226,206,.14);--line-soft:rgba(237,226,206,.07);
+  --sand-50:#F4EDDF;--sand-100:#EDE2CE;--sand-300:#C4B69C;--sand-500:#8E8471;
+  --gnss:#3FCF8E;--pdr:#F2A03D;--back:#5FA8E8;--sos:#E4533F;
+  --f-display:"Readex Pro","IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(1.25rem,5vw,4.5rem);--maxw:960px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--f-body);font-weight:400;font-size:clamp(1rem,.95rem+.2vw,1.075rem);line-height:1.8;background:var(--ink-900);color:var(--sand-100);overflow-x:hidden}
+a{color:var(--gnss);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,20,25,.86);backdrop-filter:blur(14px) saturate(1.2);border-block-end:1px solid var(--line-soft)}
+.nav__in{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);max-width:var(--maxw);margin-inline:auto;padding:.7rem var(--pad)}
+.brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;flex:0 0 auto}
+.brand__ar{font-family:var(--f-display);font-weight:700;font-size:1.5rem;line-height:1;color:var(--sand-50)}
+.brand__en{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.42em;color:var(--sand-500);text-transform:uppercase}
+.nav__links{display:flex;gap:1.6rem;margin-inline-start:auto;list-style:none}
+.nav__links a{font-size:.9rem;color:var(--sand-300);padding-block:.35rem;border-block-end:1px solid transparent;transition:color .18s,border-color .18s}
+.nav__links a:hover{color:var(--sand-50);border-block-end-color:var(--gnss);text-decoration:none}
+
+main{padding-block:clamp(3rem,8vh,6rem)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,1rem+4vw,3.4rem);line-height:1.2;color:var(--sand-50);margin-bottom:.3rem}
+.h1-en{font-size:1rem;color:var(--sand-500);font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.intro{font-size:1.1rem;color:var(--sand-300);margin-bottom:1.5rem}
+
+/* Contact card */
+.contact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--ink-850);border:1px solid var(--line);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:2.5rem}
+.contact .lbl{font-size:.9rem;color:var(--sand-300)}
+.contact a{font-family:var(--f-mono);font-size:1.05rem;color:var(--gnss);text-decoration:none;font-weight:600}
+.contact a:hover{color:#5BE0A5}
+
+h2{font-family:var(--f-display);font-weight:600;font-size:1.4rem;color:var(--sand-50);margin-bottom:1rem}
+
+/* FAQ */
+.faq{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink-850)}
+details{border-bottom:1px solid var(--line-soft)}
+details:last-child{border-bottom:0}
+summary{cursor:pointer;padding:1.1rem 1.5rem;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:.8rem;color:var(--sand-100);transition:color .2s}
+summary:hover{color:var(--sand-50)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gnss);font-family:var(--f-mono);font-size:1.3rem;font-weight:400}
+details[open] summary::after{content:"−"}
+details[open] summary{color:var(--gnss)}
+.faq-body{padding:0 1.5rem 1.2rem;color:var(--sand-300);font-size:.92rem}
+.faq-body .en{display:block;margin-top:.5rem;color:var(--sand-500);font-size:.84rem}
+
+.foot{border-block-start:1px solid var(--line-soft);padding-block:2.2rem;margin-top:2rem}
+.foot__in{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sand-500)}
+.foot a{color:var(--sand-500);text-decoration:none}
+.foot a:hover{color:var(--sand-100)}
+@media(max-width:560px){.nav__links{display:none}.brand__en{display:none}.contact{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-  <div class="brand">
-    <img src="logo.png" alt="أثر" style="width:34px;height:34px"/>
-    <div><b>أثر</b><small>A T H A R</small></div>
+
+<header class="nav">
+  <div class="nav__in">
+    <a class="brand" href="index.html"><span class="brand__ar">أثر</span><span class="brand__en">ATHR</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="privacy.html">الخصوصية</a></li>
+      <li><a href="index.html#get">التطبيق</a></li>
+    </ul>
   </div>
-  <nav><a href="index.html">الرئيسية</a><a href="privacy.html">الخصوصية · Privacy</a></nav>
-</div></header>
+</header>
 
 <main><div class="wrap">
   <h1>الدعم والمساعدة</h1>
   <div class="h1-en">Support &amp; Help</div>
-  <p class="intro">نحن هنا لمساعدتك. راسلنا لأي سؤال أو مشكلة، أو اطّلع على الأسئلة الشائعة أدناه.</p>
+  <p class="intro">نحن هنا لمساعدتك. راسلنا لأي سؤال أو مشكلة.</p>
 
   <div class="contact">
-    <span class="lbl">للتواصل والدعم · Contact us</span>
+    <span class="lbl">للتوا��ل والدعم</span>
     <a href="mailto:support@uae-athr.com">support@uae-athr.com</a>
   </div>
 
-  <h2>الأسئلة الشائعة · FAQ</h2>
+  <h2>الأسئلة الشائعة</h2>
   <div class="faq">
     <details open>
       <summary>كيف أسترجع حسابي على جهاز جديد؟</summary>
-      <p>أمّن حسابك أولاً من «ملفي ← تأمين الحساب» بإضافة بريد وكلمة مرور. على الجهاز الجديد، بعد التوتريال اختر «لديك حساب؟ سجّل الدخول» بنفس البريد.
-      <span class="en">Secure your account (My profile → Secure account), then on a new device pick "Have an account? Sign in".</span></p>
+      <div class="faq-body">أمّن حسابك أولاً من «ملفي ← تأمين الحساب» بإضافة بريد وكلمة مرور. على الجهاز الجديد اختر «لديك حساب؟ سجّل الدخول».
+      <span class="en">Secure your account (Profile → Secure account), then sign in on the new device.</span></div>
     </details>
     <details>
       <summary>نسيت كلمة المرور؟</summary>
-      <p>في شاشة تسجيل الدخول اضغط «نسيت كلمة المرور؟» — يصلك رابط على بريدك لتعيين كلمة جديدة.
-      <span class="en">On the sign-in screen tap "Forgot password?" — a reset link is emailed to you.</span></p>
+      <div class="faq-body">في شاشة تسجيل الدخول اضغط «نسيت كلمة المرور؟» — يصلك رابط إعادة تعيين على بريدك.
+      <span class="en">Tap "Forgot password?" on the sign-in screen — a reset link is emailed to you.</span></div>
     </details>
     <details>
       <summary>كيف أنزّل خريطة للعمل بلا إنترنت؟</summary>
-      <p>افتح «مدير الخرائط» من قائمة الخصائص، اختر خريطة جاهزة واضغط «تنزيل» (على واي‑فاي)، أو حدّد منطقة يدوياً. التنزيل يكمل تلقائياً لو انقطع.
-      <span class="en">Open Map Manager, pick a ready map and Download (on Wi‑Fi), or select an area manually. Downloads resume if interrupted.</span></p>
+      <div class="faq-body">افتح «مدير الخرائط» من القائمة، اختر خريطة جاهزة واضغط «تنزيل» (يُفضل على واي‑فاي).
+      <span class="en">Open Map Manager, pick a ready map and Download (preferably on Wi‑Fi).</span></div>
     </details>
     <details>
-      <summary>كيف يعمل التخاطب الصوتي (الوكي توكي)؟</summary>
-      <p>فعّل الوكي واختر المجموعة، ثم اضغط مطوّلاً على زر التحدّث الكبير أسفل الشاشة. الأصوات الواردة تُشغّل بالترتيب دون تداخل مع تسجيلك.
-      <span class="en">Enable walkie, pick targets, then press-and-hold the big talk button. Incoming clips play in order.</span></p>
+      <summary>كيف يعمل الوكي توكي؟</summary>
+      <div class="faq-body">فعّله من الشاشة الرئيسية، اختر الأشخاص أو المجموعة، ثم اضغط مطوّلاً على زر التحدّث.
+      <span class="en">Enable from main screen, pick targets, then press-and-hold the talk button.</span></div>
     </details>
     <details>
       <summary>كيف أحذف حسابي؟</summary>
-      <p>راسلنا على <a href="mailto:support@uae-athr.com">support@uae-athr.com</a> من البريد المرتبط بحسابك، وسنحذف حسابك وكل بياناتك.
-      <span class="en">Email support@uae-athr.com from your account's email and we'll delete your account and all data.</span></p>
+      <div class="faq-body">راسلنا على <a href="mailto:support@uae-athr.com">support@uae-athr.com</a> من بريدك المرتبط بالحساب.
+      <span class="en">Email us from your account's email address.</span></div>
     </details>
     <details>
-      <summary>لا تصل الإشعارات / الصوت لا يعمل؟</summary>
-      <p>تأكد من السماح بالإشعارات والميكروفون من إعدادات جهازك للتطبيق، ثم أعد فتح التطبيق.
-      <span class="en">Make sure notification &amp; microphone permissions are granted in your device settings, then reopen the app.</span></p>
+      <summary>الإشعارات أو الصوت لا يعمل؟</summary>
+      <div class="faq-body">تأكد من السماح بالإشعارات والميكروفون من إعدادات جهازك للتطبيق.
+      <span class="en">Grant notification &amp; microphone permissions in your device settings.</span></div>
     </details>
   </div>
 </div></main>
 
-<footer><div class="wrap"><span>uae-athr.com</span><span>أثر · ATHAR © 2026</span></div></footer>
+<footer class="foot">
+  <div class="foot__in">
+    <span>أثر · ATHR</span>
+    <a href="privacy.html">الخصوصية</a>
+    <a href="index.html">الرئيسية</a>
+    <span class="ltr">© 2026 · uae-athr.com</span>
+  </div>
+</footer>
+
 </body>
 </html>
