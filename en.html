@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أثر · ATHR — دليلك في البرّ والبحر</title>
-<meta name="description" content="تصور تصميم بديل لموقع تطبيق أثر — ملاحة برّية وبحرية بلا شبكة.">
+<title>ATHR · أثر — Your Guide on Land &amp; Sea</title>
+<meta name="description" content="Alternative design concept for the Athr app site — offline land & sea navigation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Marcellus&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -374,50 +374,64 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   .tele-cell:nth-child(n+3){border-top:1px solid var(--hair-soft)}
   .foot-grid{grid-template-columns:1fr}
 }
+
+/* --- English LTR overrides --- */
+.hero-title,.feats-head h2,.feat-main h3,.why h2,.download h2{
+  font-family:'Marcellus',serif;font-weight:400;letter-spacing:.005em;line-height:1.18;
+}
+.manifesto h2{font-family:'Marcellus',serif;line-height:1.35}
+.hero-title{font-size:clamp(44px,6.2vw,92px)}
+.feat-main h3{font-size:clamp(23px,2.4vw,32px)}
+.manifesto h2 .gold{font-weight:400}
+.brand .en{font-size:15px;letter-spacing:.3em}
+.foot-water{font-family:'Marcellus',serif;font-weight:400;letter-spacing:.14em}
+.eyebrow .ar{letter-spacing:.08em}
 </style>
+
 </head>
 <body>
 <!-- ================= HEADER ================= -->
 <header id="header">
   <div class="wrap nav">
     <a class="brand" href="#top">
-      <img src="logo.png" alt="أثر" style="height:44px;width:auto;filter:drop-shadow(0 1px 4px rgba(0,0,0,.35))">
+      <img src="logo.png" alt="ATHR" style="height:44px;width:auto;filter:drop-shadow(0 1px 4px rgba(0,0,0,.35))">
     </a>
     <nav class="nav-links">
-      <a href="#features">ما يقدّمه</a>
-      <a href="#why">لماذا أثر</a>
-      <a href="#download">التحميل</a>
+      <a href="#features">What it offers</a>
+      <a href="#why">Why Athr</a>
+      <a href="#download">Download</a>
     </nav>
     <div class="nav-side">
-      <a class="lang mono" href="en.html">EN</a>
-      <a class="btn btn-sm" href="#download">حمّل التطبيق</a>
+      <a class="lang mono" href="index.html" style="letter-spacing:.05em">عربي</a>
+      <a class="btn btn-sm" href="#download">Get the app</a>
     </div>
   </div>
 </header>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <div class="hero-media"><img id="heroImg" src="assets/hero-dunes.jpg" alt="كثبان الصحراء تلتقي بالبحر عند الغسق"></div>
+  <div class="hero-media"><img id="heroImg" src="assets/hero-dunes.jpg" alt="Desert dunes meeting the sea at dusk"></div>
 
   <div class="wrap hero-body">
     <div class="eyebrow"><span>Land &amp; Sea Navigation</span><span class="ar">ملاحة برّية وبحرية</span></div>
     <h1 class="hero-title" data-reveal>
-      دليلك في البرّ والبحر —<br>
-      <span class="cream">بلا شبكة،</span> <span class="gold">بلا ضياع</span>
+      Your guide on land &amp; sea —<br>
+      <span class="cream">no signal,</span> <span class="gold">no way lost</span>
     </h1>
     <p class="hero-sub" data-reveal>
-      نزّل خريطة منطقتك قبل أن تنطلق. أثر يتتبّع مسارك بالأقمار الصناعية ويحفظه
-      حتى بعد انقطاع الإشارة، ويعيدك إلى نقطة البداية خطوة بخطوة.
+      Download your region's map before you set off. Athr tracks your route by
+      satellite and keeps it even after the signal drops, guiding you back to
+      your starting point step by step.
     </p>
     <div class="hero-cta" data-reveal>
       <a class="btn" href="https://apps.apple.com/ae/app/athr/id6793043715" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.5.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.74-.93s2.25.93 3.78.9c1.56-.03 2.55-1.41 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.73-.74.86-1.39 2.23-1.22 3.55 1.29.1 2.6-.65 3.41-1.62z"/></svg>
-        حمّل من App Store
+        Download on the App Store
       </a>
       <a class="btn btn-ghost" href="https://expo.dev/artifacts/eas/gxA_mxPL1QYf3HoEJzh7Bq6X6SL_8Neq6R9fo7BMPiY.apk" target="_blank" rel="noopener">
         <span class="btn-in">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          ملف Android APK
+          Android APK file
         </span>
       </a>
     </div>
@@ -452,7 +466,7 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
     </div>
     <div class="tele-cell">
       <span class="tele-label">Speed · السرعة</span>
-      <span class="tele-value">48 <span class="ar">كم/س</span></span>
+      <span class="tele-value">48 <span class="ar">km/h</span></span>
     </div>
     <div class="tele-cell">
       <span class="tele-label">Elevation · الارتفاع</span>
@@ -470,13 +484,13 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   <div class="wrap">
     <span class="mark" data-reveal>”</span>
     <h2 data-reveal>
-      أفضل الطرق هي التي <span class="gold">لا تصلها الشبكة</span>.
-      في قلب الرملة أو عرض البحر تنقطع التغطية، لكن الرحلة تكمل.
+      The best roads are the ones <span class="gold">with no coverage</span>.
+      In the heart of the sand or out at sea, the signal drops — but the journey goes on.
     </h2>
     <p class="note" data-reveal>
-      الملاحة والقبلة والمواقيت تعمل داخل جهازك بلا أي اتصال.
-      التخاطب الصوتي والمجموعات والمساعد الذكي تحتاج شبكة.
-      تعرف ذلك من هنا — لا من وسط الصحراء.
+      Navigation, Qibla and prayer times all run on your device with no connection.
+      Voice chat, groups and the smart assistant need a network.
+      You learn that here — not in the middle of the desert.
     </p>
   </div>
 </section>
@@ -485,92 +499,92 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   <div class="wrap">
     <div class="feats-head">
       <div class="eyebrow"><span>Capabilities</span><span class="ar">ما يقدّمه أثر</span></div>
-      <h2 data-reveal>ستّ قدرات، أثرٌ واحد</h2>
-      <p data-reveal>خريطة وتتبّع وتواصل في تطبيق واحد — يكتب لك أثر رحلتك لتعود منه أو تشاركه.</p>
+      <h2 data-reveal>Six capabilities, one trail</h2>
+      <p data-reveal>Map, tracking and communication in a single app — it writes the trail of your journey so you can retrace it or share it.</p>
     </div>
 
     <div class="feats">
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">01</span><span class="tag">بلا إنترنت</span></div>
+        <div class="feat-num"><span class="n">01</span><span class="tag">Offline</span></div>
         <div class="feat-main">
-          <h3>خرائط أقمار صناعية تعمل بلا شبكة</h3>
-          <p>نزّل منطقتك بدقة z17 وأنت في البيت، ثم أغلق البيانات تمامًا. الخريطة والموقع والسرعة تبقى شغّالة.</p>
+          <h3>Satellite maps that work offline</h3>
+          <p>Download your region at z17 detail while you're home, then switch data off completely. Map, position and speed keep working.</p>
         </div>
         <ul class="feat-points">
-          <li>مناطق جاهزة بدقة عالية <em>z17</em></li>
-          <li>تتبّع مباشر للموقع والسرعة والاتجاه</li>
-          <li>تسجيل الرحلة وتصديرها ملف <em>GPX</em></li>
-          <li>علامات جاهزة: مخيّم، ماء، خطر</li>
+          <li>Ready-to-go regions at high detail <em>z17</em></li>
+          <li>Live tracking of position, speed and heading</li>
+          <li>Trip recording with <em>GPX</em> export</li>
+          <li>Ready markers: camp, water, hazard</li>
         </ul>
       </div>
 
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">02</span><span class="tag off">يحتاج شبكة</span></div>
+        <div class="feat-num"><span class="n">02</span><span class="tag off">Needs network</span></div>
         <div class="feat-main">
-          <h3>تخاطب صوتي مع مجموعتك</h3>
-          <p>اضغط زر التحدّث فيصل صوتك لكل من في المجموعة، حتى والتطبيق في الخلفية. لا تحتاج تطبيقًا منفصلًا.</p>
+          <h3>Voice chat with your group</h3>
+          <p>Press the talk button and your voice reaches everyone in the group, even with the app in the background. No separate app needed.</p>
         </div>
         <ul class="feat-points">
-          <li>زر تحدّث كبير يُستخدم بيد واحدة</li>
-          <li>تشغيل تلقائي للرسائل الواردة</li>
-          <li>ترتيب الأصوات بالدور بلا تداخل</li>
-          <li>تنبيه يصلك والتطبيق مقفل</li>
+          <li>A large talk button, usable one-handed</li>
+          <li>Automatic playback of incoming messages</li>
+          <li>Voices queued in turn, no overlap</li>
+          <li>Alerts reach you with the app locked</li>
         </ul>
       </div>
 
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">03</span><span class="tag off">يحتاج شبكة</span></div>
+        <div class="feat-num"><span class="n">03</span><span class="tag off">Needs network</span></div>
         <div class="feat-main">
-          <h3>مجموعات ومواقع حيّة</h3>
-          <p>أنشئ مجموعة الرحلة، شارك موقعك، وشاهد أين وصل كل واحد على نفس الخريطة.</p>
+          <h3>Groups and live locations</h3>
+          <p>Create the trip group, share your location, and see where everyone has reached on the same map.</p>
         </div>
         <ul class="feat-points">
-          <li>مجموعات ومحادثات فردية</li>
-          <li>مواقع الأعضاء تتحدّث لحظيًا</li>
-          <li>كود صداقة مميّز لكل مستخدم</li>
-          <li>مشاركة العلامات والمسارات المسجّلة</li>
+          <li>Groups and one-to-one chats</li>
+          <li>Member locations update in real time</li>
+          <li>A unique friend code for every user</li>
+          <li>Share markers and recorded tracks</li>
         </ul>
       </div>
 
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">04</span><span class="tag off">يحتاج شبكة</span></div>
+        <div class="feat-num"><span class="n">04</span><span class="tag off">Needs network</span></div>
         <div class="feat-main">
-          <h3>مساعد ذكي ينفّذ، لا يشرح فقط</h3>
-          <p>قل له بصوتك أو اكتب له، فينفّذ الأمر داخل التطبيق ويعرض عليك النتيجة قبل التنفيذ النهائي.</p>
+          <h3>An assistant that acts, not just explains</h3>
+          <p>Tell it by voice or text and it executes the command inside the app, showing you the result before the final confirmation.</p>
         </div>
         <ul class="feat-points">
-          <li>«اجعلها وجهتي» — يرسم الطريق إليها</li>
-          <li>«أرسل لمحمد» — بعد تأكيدك أنت</li>
-          <li>بحث عن الأماكن القريبة منك</li>
-          <li>ردّ صوتي اختياري بالعربية</li>
+          <li>"Make it my destination" — it draws the route</li>
+          <li>"Send to Mohammed" — only after you confirm</li>
+          <li>Search for places near you</li>
+          <li>Optional voice replies in Arabic</li>
         </ul>
       </div>
 
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">05</span><span class="tag">بلا إنترنت</span></div>
+        <div class="feat-num"><span class="n">05</span><span class="tag">Offline</span></div>
         <div class="feat-main">
-          <h3>القبلة والمواقيت وزر الطوارئ</h3>
-          <p>كلها محسوبة داخل جهازك من موقعك مباشرة. لا تحتاج اتصالًا، ولا تتوقّف حين تتوقّف الشبكة.</p>
+          <h3>Qibla, prayer times &amp; an SOS button</h3>
+          <p>All computed on your device directly from your location. No connection needed — they don't stop when the network does.</p>
         </div>
         <ul class="feat-points">
-          <li>بوصلة قبلة دقيقة من إحداثياتك</li>
-          <li>عدّاد الصلاة القادمة والشروق</li>
-          <li>أرقام الطوارئ حسب الدولة التي أنت فيها</li>
-          <li>زر <em>SOS</em> يرسل إحداثياتك فور توفّر الشبكة</li>
+          <li>Accurate Qibla compass from your coordinates</li>
+          <li>Countdown to the next prayer and sunrise</li>
+          <li>Emergency numbers for the country you're in</li>
+          <li><em>SOS</em> sends your coordinates once a network is back</li>
         </ul>
       </div>
 
       <div class="feat" data-reveal>
-        <div class="feat-num"><span class="n">06</span><span class="tag">بلا إنترنت</span></div>
+        <div class="feat-num"><span class="n">06</span><span class="tag">Offline</span></div>
         <div class="feat-main">
-          <h3>عربي كامل، لا ترجمة مقلوبة</h3>
-          <p>الواجهة مبنية من اليمين لليسار أصلًا، والأرقام والاتجاهات والخرائط كلها بنفس المنطق. وبضغطة واحدة تصير إنجليزية.</p>
+          <h3>Fully Arabic, not a flipped translation</h3>
+          <p>The interface is built right-to-left from the ground up; numbers, directions and maps all follow the same logic. One tap and it becomes English.</p>
         </div>
         <ul class="feat-points">
-          <li>تبديل فوري بين العربية والإنجليزية</li>
-          <li>حسابك ومساراتك تنتقل معك لأي جهاز</li>
-          <li>استرجاع الحساب بالبريد الإلكتروني</li>
-          <li><em>iOS</em> و <em>Android</em> بنفس المزايا</li>
+          <li>Instant switching between Arabic and English</li>
+          <li>Your account and tracks follow you to any device</li>
+          <li>Account recovery by email</li>
+          <li><em>iOS</em> and <em>Android</em> with the same features</li>
         </ul>
       </div>
     </div>
@@ -581,23 +595,24 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   <div class="wrap why-grid">
     <div>
       <div class="eyebrow"><span>Why Athr</span><span class="ar">لماذا أثر</span></div>
-      <h2 data-reveal>حين تنتهي التغطية،<br><span class="gold">يبدأ أثر</span></h2>
+      <h2 data-reveal>When coverage ends,<br><span class="gold">Athr begins</span></h2>
       <p data-reveal>
-        أثر يجمع الخريطة والتواصل والتتبّع في تطبيق واحد، ويكتب لك أثر رحلتك
-        لتعود منه أو تشاركه — من قلب الرملة إلى عرض البحر.
+        Athr brings map, communication and tracking together in one app, writing
+        the trail of your journey so you can retrace it or share it — from the
+        heart of the sand to the open sea.
       </p>
       <div class="stats" data-reveal>
-        <div class="stat"><span class="k">حالة النظام</span><span class="v gold"><span class="dot">●</span>READY</span></div>
-        <div class="stat"><span class="k">شبكة مطلوبة للملاحة</span><span class="v">0</span></div>
-        <div class="stat"><span class="k">دقة الخرائط الجاهزة</span><span class="v">z17</span></div>
-        <div class="stat"><span class="k">تصدير المسارات</span><span class="v">GPX</span></div>
-        <div class="stat"><span class="k">المنصّات</span><span class="v">iOS · Android</span></div>
-        <div class="stat"><span class="k">اللغات</span><span class="v">AR · EN</span></div>
+        <div class="stat"><span class="k">System status</span><span class="v gold"><span class="dot">●</span>READY</span></div>
+        <div class="stat"><span class="k">Network needed for navigation</span><span class="v">0</span></div>
+        <div class="stat"><span class="k">Offline map detail</span><span class="v">z17</span></div>
+        <div class="stat"><span class="k">Track export</span><span class="v">GPX</span></div>
+        <div class="stat"><span class="k">Platforms</span><span class="v">iOS · Android</span></div>
+        <div class="stat"><span class="k">Languages</span><span class="v">AR · EN</span></div>
       </div>
     </div>
     <div class="why-media" data-reveal>
-      <div class="why-frame"><img id="nightImg" src="assets/night-stars.jpg" alt="مخيّم ليلي تحت درب التبّانة في الصحراء"></div>
-      <div class="why-cap"><span>24°28′N 54°22′E</span><span>الربع الخالي · بعد انقطاع الإشارة</span></div>
+      <div class="why-frame"><img id="nightImg" src="assets/night-stars.jpg" alt="A night camp under the Milky Way in the desert"></div>
+      <div class="why-cap"><span>24°28′N 54°22′E</span><span>The Empty Quarter · after signal loss</span></div>
     </div>
   </div>
 </section>
@@ -607,23 +622,23 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   <div class="wrap">
     <div class="coords latin" data-reveal>24°28′N — 54°22′E</div>
     <div class="eyebrow" style="justify-content:center"><span>Start Here</span><span class="ar">ابدأ من هنا</span></div>
-    <h2 data-reveal>نزّل خريطتك<br>قبل ما تنطلق</h2>
-    <p data-reveal>ثبّت أثر، اختر منطقتك، ونزّلها وأنت على الواي فاي. بعدها الصحراء لك.</p>
+    <h2 data-reveal>Download your map<br>before you set off</h2>
+    <p data-reveal>Install Athr, choose your region, and download it on Wi-Fi. After that, the desert is yours.</p>
     <div class="hero-cta" data-reveal>
       <a class="btn" href="https://apps.apple.com/ae/app/athr/id6793043715" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.5.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.74-.93s2.25.93 3.78.9c1.56-.03 2.55-1.41 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.73-.74.86-1.39 2.23-1.22 3.55 1.29.1 2.6-.65 3.41-1.62z"/></svg>
-        حمّل من App Store
+        Download on the App Store
       </a>
       <a class="btn btn-ghost" href="https://expo.dev/artifacts/eas/gxA_mxPL1QYf3HoEJzh7Bq6X6SL_8Neq6R9fo7BMPiY.apk" target="_blank" rel="noopener">
         <span class="btn-in">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          ملف Android APK
+          Android APK file
         </span>
       </a>
     </div>
     <div class="fineprint" data-reveal>
-      <span class="ar">uae-athr.com · مجاني · بلا إعلانات</span>
-      <span class="ar">آيفون: يتطلب iOS 16.4 أو أحدث · أندرويد: افتح الملف بعد التنزيل واسمح بالتثبيت</span>
+      <span class="ar">uae-athr.com · Free · No ads</span>
+      <span class="ar">iPhone: requires iOS 16.4 or later · Android: open the file after download and allow installation</span>
     </div>
   </div>
 </section>
@@ -633,19 +648,19 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="#top"><img src="logo.png" alt="أثر" style="height:58px;width:auto"></a>
-        <p>ملاحة برّية وبحرية. خريطتك معك، ومسارك محفوظ، حتى حيث تنتهي الشبكة.</p>
+        <a class="brand" href="#top"><img src="logo.png" alt="ATHR" style="height:58px;width:auto"></a>
+        <p>Land &amp; sea navigation. Your map with you, your track saved — even where the network ends.</p>
       </div>
       <div class="foot-col">
-        <h4>التطبيق</h4>
-        <a href="#features">ما يقدّمه</a>
-        <a href="#why">لماذا أثر</a>
-        <a href="#download">التحميل</a>
+        <h4>The App</h4>
+        <a href="#features">What it offers</a>
+        <a href="#why">Why Athr</a>
+        <a href="#download">Download</a>
       </div>
       <div class="foot-col">
-        <h4>الدعم</h4>
-        <a href="privacy.html">الخصوصية</a>
-        <a href="support.html">الدعم</a>
+        <h4>Support</h4>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
         <a href="https://apps.apple.com/ae/app/athr/id6793043715" target="_blank" rel="noopener">App Store</a>
       </div>
     </div>
@@ -654,7 +669,7 @@ footer{border-top:1px solid var(--hair);position:relative;overflow:hidden}
       <span class="latin">LAND · SEA · OFFLINE</span>
     </div>
   </div>
-  <div class="foot-water" aria-hidden="true">أثر</div>
+  <div class="foot-water" aria-hidden="true">ATHR</div>
 </footer>
 
 <script>
